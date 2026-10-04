@@ -115,6 +115,10 @@ footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--mute);fo
 footer .row{justify-content:space-between}
 @media (min-width:1000px){.ctl{grid-template-columns:auto auto minmax(180px,1fr) auto auto;gap:28px}.seg{flex-wrap:nowrap}}
 .hintrow{justify-content:space-between;margin-top:10px}.hintrow .hint{margin:0}
+.uw{margin-top:32px}.uw h2{font-size:clamp(1.1rem,2.6vw,1.5rem);margin:0 0 .3em}.uw figure{margin:12px 0 0;background:var(--bg2);border:2px solid var(--line)}.uw figcaption{font:.8rem var(--mono);color:var(--mute);padding:6px 10px}
+.uwv video{display:block;width:100%;height:auto;aspect-ratio:32/9;image-rendering:pixelated;background:#000}
+.uwg{display:grid;grid-template-columns:3.56fr 2.33fr;gap:12px;align-items:start}.uwg figure{min-width:0}.uwg img{width:100%;height:auto;image-rendering:pixelated;aspect-ratio:21/9;object-fit:cover}.uwg figure:first-child img{aspect-ratio:32/9}
+@media (max-width:760px){.uwg{grid-template-columns:1fr}}
 @media (max-width:760px){
  .nav ul{display:none}.lang{margin-left:auto}
  section{padding:44px 0}.hero{padding:24px 0 32px}
@@ -142,10 +146,10 @@ footer .row{justify-content:space-between}
 <main id="main">
 <section class="hero" id="top"><div class="wrap" id="demo">
  <h1 data-i18n="h1">Pixel art wallpapers that are <em>alive</em>.</h1>
- <p class="lead" data-i18n="lead">They follow your clock and the real moon, change with the weather, and never play the same loop twice. Native 16:9, 21:9 and 32:9. This is the real wallpaper, running in your browser: play with it.</p>
+ <p class="lead" data-i18n="lead">They follow your clock and the real moon, change with the weather, and never play the same loop twice. This is the real wallpaper running in your browser, in 16:9: play with it. Native 21:9 and 32:9 come with the pack.</p>
 
  <div class="screen" id="screen" style="--ar:16/9;--arn:1.778">
-  <iframe id="frame" title="Live wallpaper demo" src="demo/jungle.html?w=1920&amp;h=1080" allow="fullscreen" loading="eager"></iframe>
+  <iframe id="frame" title="Live wallpaper demo" src="demo/jungle.html" allow="fullscreen" loading="eager"></iframe>
   <span class="tag" id="tag" data-i18n="live">LIVE</span>
  </div>
 
@@ -153,11 +157,6 @@ footer .row{justify-content:space-between}
   <fieldset><legend data-i18n="c1">Theme</legend><div class="seg">
    <input type="radio" name="theme" id="t-j" value="jungle" checked><label for="t-j">Jungle</label>
    <input type="radio" name="theme" id="t-n" value="neoncity"><label for="t-n">Neon City</label>
-  </div></fieldset>
-  <fieldset><legend data-i18n="c4">Format</legend><div class="seg">
-   <input type="radio" name="fmt" id="f-169" value="1920x1080" checked><label for="f-169">16:9</label>
-   <input type="radio" name="fmt" id="f-219" value="2560x1080"><label for="f-219">21:9</label>
-   <input type="radio" name="fmt" id="f-329" value="5120x1440"><label for="f-329">32:9</label>
   </div></fieldset>
   <div class="full"><label class="lbl" for="hour" data-i18n="c2">Time of day</label>
    <div class="row"><input type="range" id="hour" min="0" max="24" step="0.25" value="12" aria-describedby="hourOut"><output class="out" id="hourOut" for="hour">12:00</output></div>
@@ -171,7 +170,17 @@ footer .row{justify-content:space-between}
   </div>
   </form>
  <div class="row hintrow"><p class="hint" data-i18n="hint">Some events only appear at night or by day. The demo pauses when it scrolls out of view.</p>
-  <a class="btn" id="open" href="demo/jungle.html?w=1920&amp;h=1080" target="_blank" rel="noopener" data-i18n="c6b">Full screen in a new tab &#8599;</a></div>
+  <a class="btn" id="open" href="demo/jungle.html" target="_blank" rel="noopener" data-i18n="c6b">Full screen in a new tab &#8599;</a></div>
+
+ <div class="uw" id="ultrawide">
+  <h2 data-i18n="uw">Native ultrawide 21:9 / 32:9 in the pack</h2>
+  <p class="hint" data-i18n="uwl">The live demo above is 16:9. On a 21:9 or 32:9 screen, the pack's wallpaper is composed for your exact width: more jungle, more city, never stretched.</p>
+  <figure class="uwv"><video id="uwv" autoplay muted loop playsinline preload="metadata" poster="img/jungle-dusk-32x9.webp" width="1024" height="288" aria-label="Video preview: Jungle in 32:9 at dusk, waterfall, rope bridges and temple"><source src="media/jungle-32x9-preview.webm" type="video/webm"><source src="media/jungle-32x9-preview.mp4" type="video/mp4"></video><figcaption data-i18n="uwc">Jungle — 32:9 (5120×1440), video preview</figcaption></figure>
+  <div class="uwg">
+   <figure><a href="img/neoncity-fireworks-32x9.webp"><img src="img/neoncity-fireworks-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Neon City in 32:9 with fireworks over the skyline"></a><figcaption data-i18n="uw1">Neon City — 32:9</figcaption></figure>
+   <figure><a href="img/neoncity-night-21x9.webp"><img src="img/neoncity-night-21x9.webp" width="1600" height="670" loading="lazy" decoding="async" alt="Neon City at night in 21:9"></a><figcaption data-i18n="uw2">Neon City — 21:9</figcaption></figure>
+  </div>
+ </div>
 
  <ul class="feat">
   <li data-i18n="f1"><b>Real time &amp; real moon</b>Dawn, day, dusk and night follow your clock. The moon shows today's phase.</li>
@@ -261,13 +270,12 @@ var EVENTS={
 };
 var lang='en';
 function theme(){return document.querySelector('input[name=theme]:checked').value}
-function fmt(){return document.querySelector('input[name=fmt]:checked').value.split('x')}
 function fmtH(h){var m=Math.round(h*60)%1440;return String(m/60|0).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
 function url(){
- var f=fmt(),q='?w='+f[0]+'&h='+f[1];
- if(!live.checked)q+='&hour='+hour.value;
- if(rain.checked)q+='&rain=0.7';
- return 'demo/'+theme()+'.html'+q;
+ var a=[];/* démo limitée au 16:9 (verrou dans demo/*.html) */
+ if(!live.checked)a.push('hour='+hour.value);
+ if(rain.checked)a.push('rain=0.7');
+ return 'demo/'+theme()+'.html'+(a.length?'?'+a.join('&'):'');
 }
 function fillEvents(){
  var t=theme(),i=lang==='fr'?2:1,cur=ev.value;ev.innerHTML='';
@@ -278,8 +286,7 @@ var tmr=0;
 function apply(){
  clearTimeout(tmr);
  tmr=setTimeout(function(){
-  var f=fmt(),u=url();
-  screen.style.setProperty('--ar',f[0]+'/'+f[1]);screen.style.setProperty('--arn',(f[0]/f[1]).toFixed(3));
+  var u=url();
   if(frame.getAttribute('src')!==u)frame.setAttribute('src',u);
   openA.href=u;
  },150);
@@ -288,7 +295,7 @@ hour.addEventListener('input',function(){out.textContent=fmtH(+hour.value);live.
 hour.addEventListener('change',apply);
 live.addEventListener('change',function(){if(live.checked){var d=new Date();out.textContent=fmtH(d.getHours()+d.getMinutes()/60)}apply()});
 rain.addEventListener('change',apply);
-document.querySelectorAll('input[name=theme],input[name=fmt]').forEach(function(r){r.addEventListener('change',function(){if(r.name==='theme')fillEvents();apply()})});
+document.querySelectorAll('input[name=theme]').forEach(function(r){r.addEventListener('change',function(){if(r.name==='theme')fillEvents();apply()})});
 function send(msg){
  try{frame.contentWindow.postMessage(msg,location.protocol==='file:'?'*':location.origin)}catch(e){}
 }
@@ -310,12 +317,15 @@ document.addEventListener('visibilitychange',update);
 frame.addEventListener('load',function(){setPause(!visible||document.hidden,true)});
 (function(){var d=new Date();out.textContent=fmtH(d.getHours()+d.getMinutes()/60);hour.value=Math.round((d.getHours()+d.getMinutes()/60)*4)/4})();
 fillEvents();
+/* vidéo ultrawide : pas d'animation si l'utilisateur la refuse */
+try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){var v=$('#uwv');v.removeAttribute('autoplay');v.pause()}}catch(e){}
 /* i18n: EN lives in the HTML, FR here */
 var FR={
 skip:'Aller au contenu',n1:'Démo',n2:'Galerie',n3:'Prix',n4:'Sur-mesure',
 h1:'Des fonds d’écran pixel art <em>vivants</em>.',
-lead:'Ils suivent votre heure et la vraie lune, changent avec la météo et ne rejouent jamais la même boucle. En 16:9, 21:9 et 32:9 natifs. Ci-dessous, c’est le vrai fond d’écran qui tourne dans votre navigateur : essayez-le.',
+lead:'Ils suivent votre heure et la vraie lune, changent avec la météo et ne rejouent jamais la même boucle. Ci-dessous, c’est le vrai fond d’écran qui tourne dans votre navigateur, en 16:9 : essayez-le. Le 21:9 et le 32:9 natifs sont dans le pack.',
 live:'EN DIRECT',c1:'Thème',c4:'Format',c2:'Heure',c2b:'Mon heure locale',c3:'Météo',c3b:'Pluie',c5:'Événement',c5b:'Déclencher',c6b:'Plein écran dans un onglet &#8599;',
+uw:'Ultrawide 21:9 / 32:9 natif dans le pack',uwl:'La démo ci-dessus est en 16:9. Sur un écran 21:9 ou 32:9, le fond du pack est composé pour votre largeur exacte : plus de jungle, plus de ville, jamais étiré.',uwc:'Jungle — 32:9 (5120×1440), aperçu vidéo',uw1:'Neon City — 32:9',uw2:'Neon City — 21:9',
 hint:'Certains événements n’apparaissent que la nuit ou le jour. La démo se met en pause quand elle sort de l’écran.',
 f1:'<b>Vraie heure, vraie lune</b>Aube, jour, crépuscule et nuit suivent votre horloge. La lune affiche sa phase du jour.',
 f2:'<b>Jamais la même boucle</b>Animaux, météo et événements sont calculés en direct, avec des secrets cachés.',

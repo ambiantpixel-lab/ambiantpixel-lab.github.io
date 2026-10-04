@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><title>Jungle — Ambiant Pixel live demo</title>
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><title>Jungle — Ambiant Pixel live demo</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>html,body{margin:0;height:100%;background:#05070d;overflow:hidden;cursor:default}canvas{position:absolute;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges;image-rendering:pixelated}#hud{position:fixed;left:12px;bottom:12px;font:12px/1.5 ui-monospace,monospace;color:#cfe;background:#000a;padding:8px 10px;border-radius:6px;display:none;white-space:pre;z-index:2}</style></head><body><canvas id="c"></canvas><div id="hud"></div><script>
 'use strict';
 // ===================== CORE =====================
 const H=288,WY=232,WB=262;
-const Q=new URLSearchParams(location.search);
+const Q=new URLSearchParams(location.search);/*AP-16x9-LOCK*/for(const k of ['w','h','nw'])Q.delete(k);Q.set('w','512');Q.set('h','288');Q.set('nw','512');{const f0=Q.get('fit'),af=()=>{if(innerWidth>innerHeight*16/9+1)Q.set('fit','contain');else if(f0===null)Q.delete('fit');else Q.set('fit',f0)};af();addEventListener('resize',af)}
 // --- FREEZE (rendu déterministe) ---
 const FREEZE=Q.get('freeze')==='1';
 if(FREEZE){Math.random=mulberry32((+(Q.get('seed')||32))^0x5f3759df);const T0=Q.has('now')?+new Date(Q.get('now')):Date.UTC(2026,9,5,10,0,0),_D=Date;window.Date=class extends _D{constructor(...a){super(...(a.length?a:[T0]))}static now(){return T0}}}
