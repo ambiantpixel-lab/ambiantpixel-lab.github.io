@@ -503,7 +503,7 @@ function drawSkyPass(t,dt){G.drawImage(skyC,0,0);
  if(S.rbow>.01){G.globalAlpha=S.rbow*.33;G.drawImage(L.rainbow,0,0);G.globalAlpha=1}
  // clouds
  clG.clearRect(0,0,W,H);for(const c of L.clouds){c.x+=c.sp*(.3+S.wind)*dt*(1+Math.min(S.speed,30)*.05);if(c.x>W+10)c.x=-c.c.width-10;const need=c.th<S.cloud;c.a=clamp((c.a||0)+(need?dt*.05:-dt*.05),0,1);if(c.a>0){clG.globalAlpha=c.a;clG.drawImage(c.c,c.x|0,c.y|0)}}
- clG.globalAlpha=1;if(S.rain>.05){clG.globalAlpha=S.rain*.8;for(let i=0;i<8;i++){const c=L.clouds[i];clG.drawImage(c.c,(i*140+S.t*4)%(W+200)-150,-6+(i%3)*8,c.c.width*1.6,c.c.height*1.4)}clG.globalAlpha=1}
+ clG.globalAlpha=1;if(S.rain>.05){clG.globalAlpha=S.rain*.8;for(let i=0;i<8;i++){const c=L.clouds[i%L.clouds.length];clG.drawImage(c.c,(i*140+S.t*4)%(W+200)-150,-6+(i%3)*8,c.c.width*1.6,c.c.height*1.4)}clG.globalAlpha=1}
  grade(clC,clG,PAL.cl);G.drawImage(clC,0,0);
  if(S.bolt){G.strokeStyle='#fff';G.fillStyle='#f4f8ff';for(const[x,y]of S.bolt.pts)G.fillRect(x|0,y|0,1,3)}}
 
@@ -641,7 +641,9 @@ function fit(){const iw=innerWidth,ih=innerHeight;let s;
 let rzT=0;addEventListener('resize',()=>{fit();clearTimeout(rzT);rzT=setTimeout(()=>{if(Q.has('w')||Q.has('nw')||FREEZE)return;if(viewFor(innerWidth,innerHeight).W!==W)location.reload()},500)});
 const hud=document.getElementById('hud');let fpsA=30;
 const FPS=+(Q.get('fps')||30);let last=performance.now();
-function frame(now){requestAnimationFrame(frame);if(window.__pause){if(window.__still&&now-window.__still<60000)return;window.__still=now;last=now;updWorld(1/30);render(1/30);return}window.__still=0;const dt=(now-last)/1000;if(dt<1/FPS-.004)return;last=now;const d=Math.min(dt,.1);fpsA=lerp(fpsA,1/Math.max(dt,.001),.05);
+let _apG=0,_apT=0,_apOn=0;function _apS(ms){const g=++_apG;if(_apT){clearTimeout(_apT);_apT=0}_apOn=1;if(ms==null)requestAnimationFrame(n=>{if(g===_apG)frame(n)});else _apT=setTimeout(()=>{_apT=0;if(g===_apG)frame(performance.now())},ms)}
+(function(){let p=!!window.__pause;try{Object.defineProperty(window,'__pause',{configurable:true,enumerable:true,get(){return p},set(v){const w=p&&!v;p=!!v;if(w&&_apOn)_apS()}})}catch(e){}document.addEventListener('visibilitychange',()=>{if(!document.hidden&&_apOn)_apS()})})();
+function frame(now){if(window.__pause||document.hidden){const due=!window.__still||now-window.__still>=60000;_apS(due?60000:Math.max(500,60000-(now-window.__still)));if(due){window.__still=now;last=now;updWorld(1/30);render(1/30)}return}_apS();window.__still=0;const dt=(now-last)/1000;if(dt<1/FPS-.004)return;last=now;const d=Math.min(dt,.1);fpsA=lerp(fpsA,1/Math.max(dt,.001),.05);
  updWorld(d);updEvents(d);render(d);
  if(S.hud){const h=S.hour;hud.textContent=`${String(h|0).padStart(2,'0')}:${String((h%1*60)|0).padStart(2,'0')}  x${S.speed}  pluie ${(S.rain*100)|0}%  ${fpsA|0} fps  ${W}x${H} x${+(VIEW.ds||0).toFixed(2)}\n[R] pluie  [T] vitesse  [N] +3h  [E] évènement  [H] masquer`}}
 const KON=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let kon=0;
@@ -656,5 +658,5 @@ main.addEventListener('pointerdown',e=>{const r=main.getBoundingClientRect(),x=(
  if(y>WY&&y<WB){A.fish.cur={x,t:0,dir:Math.random()<.5?1:-1,c:'#ff9a3a'};ripple(x,y,6)}else if(S.night>.5){for(let i=0;i<6;i++)ffs[rint(0,ffs.length-1)]&&Object.assign(ffs[rint(0,ffs.length-1)],{x:x+mr(-10,10),y:y+mr(-10,10)})}else{for(let i=0;i<3;i++){const b=bf[rint(0,bf.length-1)];b.x=x;b.y=y}}});
 build();fit();
 for(const ev of(Q.get('fx')||'').split(',').filter(Boolean))spawn(ev);
-if(FREEZE){S.speed=0;if(!Q.has('hour'))S.hour=12;const n=Math.round(+(Q.get('ft')||20)*30);for(let i=0;i<n;i++){updWorld(1/30);updEvents(1/30);render(1/30)}if(!n){updWorld(0);render(0)}window.__frozen=true;document.title+=' [frozen]'}else requestAnimationFrame(frame);
+if(FREEZE){S.speed=0;if(!Q.has('hour'))S.hour=12;const n=Math.round(+(Q.get('ft')||20)*30);for(let i=0;i<n;i++){updWorld(1/30);updEvents(1/30);render(1/30)}if(!n){updWorld(0);render(0)}window.__frozen=true;document.title+=' [frozen]'}else _apS();
 </script><script>/* Ambiant Pixel site bridge */addEventListener('message',function(e){if(e.origin!==location.origin&&location.protocol!=='file:')return;var d=e.data||{};if(d.ap==='pause')window.__pause=!!d.v;else if(d.ap==='fx'&&typeof spawn==='function'&&/^[a-z]+$/.test(d.v))spawn(d.v)});</script></body></html>

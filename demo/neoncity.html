@@ -676,7 +676,9 @@ function drawCat(t,dt){const[cx,cy]=META.cat,C=CAT;C.blink-=dt;if(C.blink<-mr(2,
 function fit(){const cover=Q.get('fit')!=='contain';const s=cover?Math.max(innerWidth/W,innerHeight/H):Math.min(innerWidth/W,innerHeight/H);main.style.width=W*s+'px';main.style.height=H*s+'px';main.style.left=(innerWidth-W*s)/2+'px';main.style.top=(innerHeight-H*s)/2+'px'}
 let rzT=0;addEventListener('resize',()=>{fit();if(Q.has('w')&&Q.has('h'))return;clearTimeout(rzT);rzT=setTimeout(()=>{const nw=calcW();if(nw!==W){W=nw;build();updWorld(0);fit();if(FREEZE)renderFreeze()}},250)});
 const hud=document.getElementById('hud');let fpsA=30;const FPS=+(Q.get('fps')||30);let last=performance.now();
-function frame(now){requestAnimationFrame(frame);if(window.__pause){if(window.__still&&now-window.__still<60000)return;window.__still=now;last=now;updWorld(1/30);render(1/30);return}window.__still=0;const dt=(now-last)/1000;if(dt<1/FPS-.004)return;last=now;const d=Math.min(dt,.1);fpsA=lerp(fpsA,1/Math.max(dt,.001),.05);
+let _apG=0,_apT=0,_apOn=0;function _apS(ms){const g=++_apG;if(_apT){clearTimeout(_apT);_apT=0}_apOn=1;if(ms==null)requestAnimationFrame(n=>{if(g===_apG)frame(n)});else _apT=setTimeout(()=>{_apT=0;if(g===_apG)frame(performance.now())},ms)}
+(function(){let p=!!window.__pause;try{Object.defineProperty(window,'__pause',{configurable:true,enumerable:true,get(){return p},set(v){const w=p&&!v;p=!!v;if(w&&_apOn)_apS()}})}catch(e){}document.addEventListener('visibilitychange',()=>{if(!document.hidden&&_apOn)_apS()})})();
+function frame(now){if(window.__pause||document.hidden){const due=!window.__still||now-window.__still>=60000;_apS(due?60000:Math.max(500,60000-(now-window.__still)));if(due){window.__still=now;last=now;updWorld(1/30);render(1/30)}return}_apS();window.__still=0;const dt=(now-last)/1000;if(dt<1/FPS-.004)return;last=now;const d=Math.min(dt,.1);fpsA=lerp(fpsA,1/Math.max(dt,.001),.05);
  updWorld(d);updEvents(d);render(d);
  if(S.hud){const h=S.hour;hud.textContent=`NEON CITY  ${W}×${H}  ${String(h|0).padStart(2,'0')}:${String(MINUTE()).padStart(2,'0')}  x${S.speed}  pluie ${(S.rain*100)|0}%  brume ${(S.fog*100)|0}%  ${fpsA|0} fps\n[R] pluie  [F] brume  [T] vitesse  [N] +3h  [E] évènement  [H] masquer`}}
 const KON=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];let kon=0;
@@ -699,7 +701,7 @@ function renderFreeze(){if(!train){train={dir:1,x:W*.58-SPA.TL/2,sp:120}}
  for(let i=0,n=S.rain*W*.55;i<n;i++){const z=RR(),end=z<.35?mr(RT,RB):z<.6?mr(RB+2,H):mr(150,RT);E.drops.push({x:mr(-20,W),y:mr(-10,end),vy:mr(290,370),end})}for(let i=0;i<4;i++){updWorld(1/30);render(1/30)}}
 build();updWorld(0);S.wet=clamp(S.rain*1.7+.12+S.night*.42,0,1);fit();
 for(const ev of(Q.get('fx')||'').split(',').filter(Boolean))spawn(ev);
-if(FREEZE)renderFreeze();else requestAnimationFrame(frame);
+if(FREEZE)renderFreeze();else _apS();
 let bench=0;if(Q.has('bench')){let a=performance.now();for(let i=0;i<5;i++)regrade();const rg=(performance.now()-a)/5;a=performance.now();for(let i=0;i<60;i++){updWorld(1/30);updEvents(1/30)}const up=(performance.now()-a)/60;a=performance.now();for(let i=0;i<60;i++)render(1/30);const rd=(performance.now()-a)/60;bench={rg,up,rd}}
 if(Q.has('dbg'))document.getElementById('hud').textContent=JSON.stringify({bench,errs:window.__errs,fw0:E.fw[0],W,fw:E.fw.length,rk:E.rk.length,police:!!police,ufo:!!ufo,koi:!!koi,blimp:!!blimp,signs:SIGNS.length,night:S.night});
 </script><script>/* Ambiant Pixel site bridge */addEventListener('message',function(e){if(e.origin!==location.origin&&location.protocol!=='file:')return;var d=e.data||{};if(d.ap==='pause')window.__pause=!!d.v;else if(d.ap==='fx'&&typeof spawn==='function'&&/^[a-z]+$/.test(d.v))spawn(d.v)});</script></body></html>
