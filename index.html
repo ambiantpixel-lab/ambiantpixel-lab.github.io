@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ambiant Pixel — Living pixel art wallpapers</title>
-<meta name="description" content="Living pixel art wallpapers that follow your clock and the real moon, never the same loop twice. Native 16:9, 21:9 and 32:9. Try the live demo.">
+<meta name="description" content="Living pixel art wallpapers that follow your clock and the real moon, never the same loop twice. Native 16:9, 21:9, 32:9, 5K2K, triple screen, Steam Deck, Mac, iPad and phones. New theme Night Train on Oct 27. Try the live demo.">
 <meta name="theme-color" content="#0b0d14">
 <link rel="canonical" href="https://ambiantpixel-lab.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -38,7 +38,7 @@ h1,h2,h3{font-family:var(--mono);letter-spacing:.02em;line-height:1.2}
 h2{font-size:clamp(1.4rem,3vw,1.9rem);margin:0 0 .4em}
 h2::before{content:"";display:inline-block;width:.5em;height:.5em;background:var(--acc2);margin-right:.5em;vertical-align:.12em;box-shadow:.5em 0 0 var(--acc)}
 .lead{color:var(--mute);max-width:46em;margin:0 0 1.5em}
-section{padding:64px 0;border-top:1px solid var(--line)}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:56px}
 /* header */
 header{position:sticky;top:0;z-index:5;background:rgba(11,13,20,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:16px;height:56px}
@@ -126,6 +126,22 @@ footer .row{justify-content:space-between}
  .gal{grid-template-columns:1fr}
  .ctl{grid-template-columns:1fr 1fr}.ctl .full{grid-column:1/-1}
 }
+.seg label small{font-size:.7rem;color:var(--warn)}
+.soon{display:inline-block;font:700 .75rem var(--mono);background:var(--warn);color:#1a1200;padding:2px 8px;vertical-align:.25em;margin-left:.4em}
+.ntg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.ntg figure,.stg figure{margin:0;background:var(--bg2);border:2px solid var(--line);min-width:0}
+.ntg figure.wide{grid-column:1/-1}
+.ntg img,.stg img{width:100%;height:auto;image-rendering:pixelated;aspect-ratio:16/9;object-fit:cover}
+.ntg .wide img{aspect-ratio:32/9}.ntg .uw21 img{aspect-ratio:21/9}
+.ntg figcaption,.stg figcaption{font:.8rem var(--mono);color:var(--mute);padding:6px 10px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:18px 0 0;padding:0;list-style:none}
+.facts li{background:var(--bg2);border-left:var(--px) solid var(--warn);padding:10px 14px;color:var(--mute);font-size:.95rem}
+.facts b{display:block;color:var(--tx);font-family:var(--mono)}
+.stg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;padding:0;list-style:none}
+.chips li{font:.85rem var(--mono);background:var(--bg3);border:2px solid var(--line);padding:6px 10px;color:var(--tx)}
+.chips li span{color:var(--mute)}
+@media (max-width:760px){.ntg,.stg{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.screen{transition:none}}
 </style>
 </head>
@@ -136,6 +152,8 @@ footer .row{justify-content:space-between}
  <nav aria-label="Main" style="margin-left:auto"><ul>
   <li><a href="#demo" data-i18n="n1">Live demo</a></li>
   <li><a href="#gallery" data-i18n="n2">Gallery</a></li>
+  <li><a href="#nighttrain">Night Train</a></li>
+  <li><a href="#stream" data-i18n="n5">Stream</a></li>
   <li><a href="#pricing" data-i18n="n3">Pricing</a></li>
   <li><a href="#custom" data-i18n="n4">Custom</a></li>
   <li><a href="#faq">FAQ</a></li>
@@ -157,6 +175,7 @@ footer .row{justify-content:space-between}
   <fieldset><legend data-i18n="c1">Theme</legend><div class="seg">
    <input type="radio" name="theme" id="t-j" value="jungle" checked><label for="t-j">Jungle</label>
    <input type="radio" name="theme" id="t-n" value="neoncity"><label for="t-n">Neon City</label>
+   <input type="radio" name="theme" id="t-t" value="nighttrain"><label for="t-t" data-i18n="c1t">Night Train <small>preview</small></label>
   </div></fieldset>
   <div class="full"><label class="lbl" for="hour" data-i18n="c2">Time of day</label>
    <div class="row"><input type="range" id="hour" min="0" max="24" step="0.25" value="12" aria-describedby="hourOut"><output class="out" id="hourOut" for="hour">12:00</output></div>
@@ -187,12 +206,13 @@ footer .row{justify-content:space-between}
   <li data-i18n="f2"><b>Never the same loop</b>Animals, weather and events are computed live, with hidden secrets.</li>
   <li data-i18n="f3"><b>Native ultrawide</b>Composed for 21:9 and 5120&times;1440 (32:9), not stretched.</li>
   <li data-i18n="f4"><b>Lightweight</b>Runs in Lively, Wallpaper Engine, a Mac app or any browser.</li>
+  <li data-i18n="f5"><b>Every screen</b>Now also 5K2K, triple screen, Steam Deck, MacBook, iPad, iPhone and Android: <a href="#formats">see the formats</a>.</li>
  </ul>
 </div></section>
 
 <section id="gallery"><div class="wrap">
  <h2 data-i18n="g">Gallery</h2>
- <p class="lead" data-i18n="gl">Two themes so far. Each scene changes through the day, with rain, fog and rare events.</p>
+ <p class="lead" data-i18n="gl">Two themes out now, a third one on October 27. Each scene changes through the day, with rain, fog and rare events.</p>
  <div class="gal">
   <figure class="wide"><a href="img/jungle-dusk-32x9.webp"><img src="img/jungle-dusk-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Jungle in 32:9 at dusk: pink sky, waterfall on the left, rope bridges and a stone temple on the right"></a><figcaption data-i18n="g1">Jungle — dusk, 32:9 (5120×1440)</figcaption></figure>
   <figure><a href="img/jungle-day-16x9.webp"><img src="img/jungle-day-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Jungle by day: blue sky, giant trees, a waterfall and a toucan on a branch"></a><figcaption data-i18n="g2">Jungle — day, 16:9</figcaption></figure>
@@ -206,6 +226,50 @@ footer .row{justify-content:space-between}
  </div>
 </div></section>
 
+<section id="nighttrain"><div class="wrap">
+ <h2><span data-i18n="nt">Night Train</span> <span class="soon" data-i18n="nts">coming Oct 27</span></h2>
+ <p class="lead" data-i18n="ntl">Theme 3. A train crosses a bay at the foot of a neon city. By night it is the Nocturne sleeper, blue and gold, with a dining car and a bar car; by day the Zephyr; sometimes a freight train. The cars are put together at random, so no two trains are the same. Ferris wheel, lighthouse, ferry, real moon phase, rain and fog.</p>
+ <div class="ntg">
+  <figure class="wide"><a href="img/nighttrain-dusk-32x9.webp"><img src="img/nighttrain-dusk-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Night Train in 32:9 at golden dusk: a long train on a bridge over a bay, a city skyline and a Ferris wheel behind"></a><figcaption data-i18n="nt1">Night Train — golden dusk, 32:9 (5120×1440)</figcaption></figure>
+  <figure><a href="img/nighttrain-night-16x9.webp"><img src="img/nighttrain-night-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Night Train at night: the blue and gold Nocturne sleeper with lit windows in front of a neon skyline"></a><figcaption data-i18n="nt2">Night Train — night, 16:9</figcaption></figure>
+  <figure><a href="img/nighttrain-day-16x9.webp"><img src="img/nighttrain-day-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Night Train by day: blue sky, the bay and the city across the water"></a><figcaption data-i18n="nt3">Night Train — day, 16:9</figcaption></figure>
+  <figure class="wide uw21"><a href="img/nighttrain-rain-21x9.webp"><img src="img/nighttrain-rain-21x9.webp" width="1600" height="670" loading="lazy" decoding="async" alt="Night Train in 21:9 on a rainy night, neon reflections in the water"></a><figcaption data-i18n="nt4">Night Train — rainy night, 21:9</figcaption></figure>
+ </div>
+ <ul class="facts">
+  <li data-i18n="ntf1"><b>October 27</b>Public release on itch.io. Pack $6, same formats as the other themes.</li>
+  <li data-i18n="ntf2"><b>Supporters: October 20</b>Paid $20 or more on a pack? You get it 7 days early.</li>
+  <li data-i18n="ntf3"><b>Collection owners: free</b>It is added to the Collection at no extra cost.</li>
+  <li data-i18n="ntf4"><b>Pre-order $6</b>Coming soon on itch.io. Pay now, download on release day.</li>
+ </ul>
+ <p><a class="cta" href="#demo" id="ntTry" data-i18n="ntb">Try the preview in the live demo</a><a class="cta ghost" href="https://ambiantpixel.itch.io" data-i18n="ntb2">Follow on itch.io</a></p>
+ <p class="hint" data-i18n="ntn">Work in progress: the preview can still change before release.</p>
+</div></section>
+
+<section id="formats"><div class="wrap">
+ <h2 data-i18n="fm">Every screen, one pack</h2>
+ <p class="lead" data-i18n="fml">16:9, 21:9 and 32:9 were already in every pack. The new formats (from 5K2K to phones) are added for free to every theme pack and to the Collection, including for people who already bought it.</p>
+ <ul class="chips" data-i18n="fmc"><li>16:9 <span>up to 4K</span></li><li>21:9 <span>3440×1440</span></li><li>32:9 <span>5120×1440</span></li><li>5K2K <span>5120×2160</span></li><li>Triple screen <span>7680×1440</span></li><li>16:10 <span>1920×1200 · 2560×1600</span></li><li>Steam Deck <span>1280×800</span></li><li>MacBook Air 15 <span>2880×1864</span></li><li>MacBook Pro 14 <span>3024×1964</span></li><li>iPad Pro <span>2732×2048</span></li><li>iPhone <span>1179×2556 · 1290×2796</span></li><li>Android <span>1440×3120</span></li></ul>
+ <p class="hint" data-i18n="fmn">Stills for each format, plus 30-second video loops. Phones get vertical stills and videos.</p>
+</div></section>
+
+<section id="stream"><div class="wrap">
+ <h2><span data-i18n="st">Stream Pack</span> <span class="soon" data-i18n="sts">coming soon</span></h2>
+ <p class="lead" data-i18n="stl">Animated scenes for OBS, Streamlabs and StreamElements, made from the wallpapers: Starting soon, Be right back, Ending and Just chatting with a webcam frame. For Jungle, Neon City and Night Train.</p>
+ <div class="stg">
+  <figure><a href="img/stream-jungle-starting-soon.webp"><img src="img/stream-jungle-starting-soon.webp" width="960" height="540" loading="lazy" decoding="async" alt="Jungle stream scene with the text Starting soon on a translucent panel"></a><figcaption data-i18n="st1">Jungle — Starting soon</figcaption></figure>
+  <figure><a href="img/stream-neoncity-brb.webp"><img src="img/stream-neoncity-brb.webp" width="960" height="540" loading="lazy" decoding="async" alt="Neon City stream scene with the text Be right back"></a><figcaption data-i18n="st2">Neon City — Be right back</figcaption></figure>
+  <figure><a href="img/stream-nighttrain-just-chatting.webp"><img src="img/stream-nighttrain-just-chatting.webp" width="960" height="540" loading="lazy" decoding="async" alt="Night Train Just chatting scene with an amber neon webcam frame"></a><figcaption data-i18n="st3">Night Train — Just chatting, webcam frame</figcaption></figure>
+  <figure><a href="img/stream-jungle-ending.webp"><img src="img/stream-jungle-ending.webp" width="960" height="540" loading="lazy" decoding="async" alt="Jungle stream scene used at the end of a stream, with a text panel"></a><figcaption data-i18n="st4">Jungle — Ending</figcaption></figure>
+ </div>
+ <ul class="facts">
+  <li data-i18n="stf1"><b>$8 per theme</b>$6 if you already own that theme's pack or the Collection.</li>
+  <li data-i18n="stf2"><b>What's inside</b>4 scenes, 60-second 1080p loops in MP4 and WebM, with and without text, PNG stills, webcam frame overlay.</li>
+  <li data-i18n="stf3"><b>Live browser source</b>An HTML version for OBS that keeps running live, with your own title and subtitle.</li>
+  <li data-i18n="stf4"><b>License</b>Use it on your own channels, even monetized, with a credit in your panel or description.</li>
+ </ul>
+ <p><a class="cta pink" href="https://ambiantpixel.itch.io" data-i18n="stb">Coming soon on itch.io</a></p>
+</div></section>
+
 <section id="pricing"><div class="wrap">
  <h2 data-i18n="p">Pricing</h2>
  <p class="lead" data-i18n="pl">Pay once, keep it. Prices in USD, pay more if you like. Sold on itch.io.</p>
@@ -213,41 +277,42 @@ footer .row{justify-content:space-between}
   <div class="card">
    <h3 data-i18n="p1">Free</h3><div class="amt">$0<small data-i18n="p1s"> · pay what you want</small></div>
    <ul data-i18n="p1l"><li>Jungle, interactive HTML 16:9</li><li>1080p video and still image</li><li>All live features: time, moon, weather, events</li></ul>
-   <div><a class="cta ghost" href="https://ambiantpixel.itch.io/jungle" data-i18n="p1b">Download free</a></div>
+   <div><a class="cta ghost" href="https://ambiantpixel.itch.io/jungle-free" data-i18n="p1b">Download free</a></div>
   </div>
   <div class="card best" data-badge="32:9 + 4K" id="packCard">
    <h3 data-i18n="p2">Theme pack</h3><div class="amt">$6<small data-i18n="p2s"> · or more</small></div>
-   <ul data-i18n="p2l"><li>Every format: 16:9 up to 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively and Mac app</li><li>Videos and stills</li><li>Free updates of the theme</li></ul>
+   <ul data-i18n="p2l"><li>Every format: 16:9 up to 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively and Mac app</li><li>Videos and stills</li><li>New: 5K2K, triple screen, Steam Deck, MacBook, iPad, phones</li><li>Free updates of the theme</li></ul>
    <div><a class="cta" href="https://ambiantpixel.itch.io/jungle" data-i18n="p2b">Jungle pack</a><a class="cta pink" href="https://ambiantpixel.itch.io/neon-city" data-i18n="p2c">Neon City pack</a></div>
   </div>
   <div class="card">
    <h3 data-i18n="p3">Collection</h3><div class="amt">$10<small data-i18n="p3s"> · 2 themes</small></div>
-   <ul data-i18n="p3l"><li>Jungle + Neon City, every format</li><li>Themes added to the collection are free for owners</li><li>Price goes up with each new theme: earlier is cheaper</li></ul>
-   <div><a class="cta ghost" href="https://ambiantpixel.itch.io" data-i18n="p3b">Get the collection</a></div>
+   <ul data-i18n="p3l"><li>Jungle + Neon City, every format</li><li>Themes added to the collection are free for owners (Night Train on Oct 27)</li><li>Price goes up with each new theme: earlier is cheaper</li></ul>
+   <div><a class="cta ghost" href="https://ambiantpixel.itch.io/collection" data-i18n="p3b">Get the collection</a></div>
   </div>
  </div>
- <p class="note" data-i18n="pn">Pay $20 or more on any pack to become a Supporter: your name in the credits and 7-day early access to the next theme. Just want to say thanks? <a href="https://ko-fi.com/ambiantpixel">Buy us a coffee on Ko-fi</a>.</p>
+ <p class="note" data-i18n="pn">Pay $20 or more on any pack to become a Supporter: your name in the credits and 7-day early access to the next theme (Night Train: October 20). Just want to say thanks? <a href="https://ko-fi.com/ambiantpixel">Buy us a coffee on Ko-fi</a>.</p>
 </div></section>
 
 <section id="custom"><div class="wrap custom">
  <div>
   <h2 data-i18n="s">Custom work</h2>
-  <p class="lead" data-i18n="sl">Want a scene for your stream, your shop window or your desk setup? A variation of a theme, your own colours, an exact screen size? Tell us what you have in mind and we'll send a quote.</p>
+  <p class="lead" data-i18n="sl">Want a scene for your stream, your shop window or your desk setup? A variation of a theme, your own colors, an exact screen size? Tell us what you have in mind and we'll send a quote.</p>
   <a class="cta pink" href="https://ko-fi.com/ambiantpixel/commissions" data-i18n="sb">Commission on Ko-fi</a>
   <a class="cta ghost" href="mailto:ambiantpixel@gmail.com?subject=Custom%20wallpaper" data-i18n="sb2">Email us</a>
-  <p class="note" data-i18n="sn">Commercial use (shops, venues, ads): licence on request by email.</p>
+  <p class="note" data-i18n="sn">Commercial use (shops, venues, ads): license on request by email.</p>
  </div>
- <img src="img/neoncity-night-21x9.webp" width="1600" height="670" loading="lazy" decoding="async" alt="Neon City skyline at night, an example of a scene that can be customised">
+ <img src="img/neoncity-night-21x9.webp" width="1600" height="670" loading="lazy" decoding="async" alt="Neon City skyline at night, an example of a scene that can be customized">
 </div></section>
 
 <section id="faq"><div class="wrap">
  <h2>FAQ</h2>
- <details><summary data-i18n="q1">How do I install it on Windows?</summary><div data-i18n="a1"><p>Use <b>Lively Wallpaper</b> (free, Microsoft Store): “Add wallpaper”, then pick the <code>.html</code> file. With <b>Wallpaper Engine</b> (Steam), the Pack includes a ready-made project for each format: open it from the editor or the Workshop.</p></div></details>
- <details><summary data-i18n="q2">And on a Mac?</summary><div data-i18n="a2"><p>The Pack includes a small Mac app that puts the wallpaper behind your desktop icons. The app is not notarised: on first launch, open <i>System Settings → Privacy &amp; Security</i> and click “Open Anyway”. You can also use the free app Plash with the <code>.html</code> file.</p></div></details>
+ <details><summary data-i18n="q1">How do I install it on Windows?</summary><div data-i18n="a1"><p>Use <b>Lively Wallpaper</b> (free, Microsoft Store): “Add wallpaper”, then pick the <code>.html</code> file. With <b>Wallpaper Engine</b> (Steam), the Pack includes one ready-made Wallpaper Engine project (all formats): in Wallpaper Engine, choose <i>Open Wallpaper → Open from File</i> and import it. A Workshop release is coming soon.</p></div></details>
+ <details><summary data-i18n="q2">And on a Mac?</summary><div data-i18n="a2"><p>The Pack includes a small Mac app that puts the wallpaper behind your desktop icons. The app is not notarized: on first launch, open <i>System Settings → Privacy &amp; Security</i> and click “Open Anyway”. You can also use the free app Plash with the <code>.html</code> file.</p></div></details>
  <details><summary data-i18n="q3">Can I just use a browser?</summary><div data-i18n="a3"><p>Yes. Open the <code>.html</code> file in Chrome, Edge, Firefox or Safari and go full screen (F11, or Ctrl+Cmd+F on Mac). It works offline.</p></div></details>
- <details><summary data-i18n="q4">Does it work on my phone?</summary><div data-i18n="a4"><p><b>Android:</b> yes, with the mobile video from the Pack and any free “video live wallpaper” app. <b>iPhone:</b> iOS does not allow video wallpapers; you can use the stills, or turn the video into a Live Photo with a third-party app (limited effect).</p></div></details>
+ <details><summary data-i18n="q4">Does it work on my phone?</summary><div data-i18n="a4"><p>The Pack has stills and vertical videos sized for iPhone (1179×2556, 1290×2796) and Android (1440×3120). <b>Android:</b> use the video with any free “video live wallpaper” app. <b>iPhone:</b> iOS does not allow video wallpapers; use the stills, or turn the video into a Live Photo with a third-party app (limited effect).</p></div></details>
  <details><summary data-i18n="q5">Does it slow down my computer?</summary><div data-i18n="a5"><p>The scenes are drawn at a low internal resolution and a capped frame rate, then scaled up. Lively and Wallpaper Engine also pause it when a game or a full-screen app is running.</p></div></details>
- <details><summary data-i18n="q6">Can I use it on stream or YouTube?</summary><div data-i18n="a6"><p>Yes, even monetised, as a background, with a credit “Wallpaper: Ambiant Pixel”. Resale and re-uploading the files are not allowed. Refunds within 14 days.</p></div></details>
+ <details><summary data-i18n="q7">Is there a Steam Deck or ultrawide 5K2K version?</summary><div data-i18n="a7"><p>Yes. Each pack now includes 1280×800 for the Steam Deck, 5120×2160 (5K2K), 7680×1440 for three 16:9 screens (set your wallpaper app to “Span”), 16:10, MacBook and iPad sizes. Free update for people who already bought a pack.</p></div></details>
+ <details><summary data-i18n="q6">Can I use it on stream or YouTube?</summary><div data-i18n="a6"><p>Yes, even monetized, as a background, with a credit “Wallpaper: Ambiant Pixel”. Resale and re-uploading the files are not allowed. Refunds within 14 days.</p></div></details>
 </div></section>
 </main>
 
@@ -266,7 +331,8 @@ var $=function(s){return document.querySelector(s)};
 var frame=$('#frame'),screen=$('#screen'),hour=$('#hour'),out=$('#hourOut'),live=$('#live'),rain=$('#rain'),ev=$('#ev'),openA=$('#open');
 var EVENTS={
  jungle:[['parrot','Parrots','Perroquets'],['flock','Bird flock','Vol d’oiseaux'],['croc','Crocodile','Crocodile'],['jag','Jaguar','Jaguar'],['snake','Snake','Serpent'],['duck','Duck','Canard'],['star','Shooting star','Étoile filante'],['ufo','???','???']],
- neoncity:[['train','Night train','Train de nuit'],['blimp','Blimp','Dirigeable'],['police','Police car','Voiture de police'],['drone','Delivery drone','Drone de livraison'],['koi','Koi balloon','Ballon carpe koï'],['fireworks','Fireworks','Feu d’artifice'],['star','Shooting star','Étoile filante'],['glitch','Glitch','Glitch'],['blackout','Blackout','Panne de courant'],['ufo','???','???']]
+ neoncity:[['train','Night train','Train de nuit'],['blimp','Blimp','Dirigeable'],['police','Police car','Voiture de police'],['drone','Delivery drone','Drone de livraison'],['koi','Koi balloon','Ballon carpe koï'],['fireworks','Fireworks','Feu d’artifice'],['star','Shooting star','Étoile filante'],['glitch','Glitch','Glitch'],['blackout','Blackout','Panne de courant'],['ufo','???','???']],
+ nighttrain:[['train','Night train','Train de nuit'],['freight','Freight train','Train de fret'],['aurora','Aurora','Aurore boréale'],['fireworks','Fireworks','Feu d’artifice'],['whale','Whale','Baleine'],['star','Shooting star','Étoile filante'],['storm','Storm','Orage'],['ufo','???','???']]
 };
 var lang='en';
 function theme(){return document.querySelector('input[name=theme]:checked').value}
@@ -317,11 +383,12 @@ document.addEventListener('visibilitychange',update);
 frame.addEventListener('load',function(){setPause(!visible||document.hidden,true)});
 (function(){var d=new Date();out.textContent=fmtH(d.getHours()+d.getMinutes()/60);hour.value=Math.round((d.getHours()+d.getMinutes()/60)*4)/4})();
 fillEvents();
+$('#ntTry').addEventListener('click',function(){var r=$('#t-t');if(!r.checked){r.checked=true;r.dispatchEvent(new Event('change'))}});
 /* vidéo ultrawide : pas d'animation si l'utilisateur la refuse */
 try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){var v=$('#uwv');v.removeAttribute('autoplay');v.pause()}}catch(e){}
 /* i18n: EN lives in the HTML, FR here */
 var FR={
-skip:'Aller au contenu',n1:'Démo',n2:'Galerie',n3:'Prix',n4:'Sur-mesure',
+skip:'Aller au contenu',n1:'Démo',n2:'Galerie',n3:'Prix',n4:'Sur-mesure',n5:'Stream',c1t:'Night Train <small>aperçu</small>',
 h1:'Des fonds d’écran pixel art <em>vivants</em>.',
 lead:'Ils suivent votre heure et la vraie lune, changent avec la météo et ne rejouent jamais la même boucle. Ci-dessous, c’est le vrai fond d’écran qui tourne dans votre navigateur, en 16:9 : essayez-le. Le 21:9 et le 32:9 natifs sont dans le pack.',
 live:'EN DIRECT',c1:'Thème',c4:'Format',c2:'Heure',c2b:'Mon heure locale',c3:'Météo',c3b:'Pluie',c5:'Événement',c5b:'Déclencher',c6b:'Plein écran dans un onglet &#8599;',
@@ -331,19 +398,40 @@ f1:'<b>Vraie heure, vraie lune</b>Aube, jour, crépuscule et nuit suivent votre 
 f2:'<b>Jamais la même boucle</b>Animaux, météo et événements sont calculés en direct, avec des secrets cachés.',
 f3:'<b>Ultra-large natif</b>Composé pour le 21:9 et le 5120&times;1440 (32:9), pas étiré.',
 f4:'<b>Léger</b>Fonctionne dans Lively, Wallpaper Engine, une app Mac ou n’importe quel navigateur.',
-g:'Galerie',gl:'Deux thèmes pour l’instant. Chaque scène évolue au fil de la journée, avec pluie, brouillard et événements rares.',
+f5:'<b>Tous les écrans</b>Désormais aussi en 5K2K, triple écran, Steam Deck, MacBook, iPad, iPhone et Android : <a href="#formats">voir les formats</a>.',
+g:'Galerie',gl:'Deux thèmes disponibles, un troisième le 27 octobre. Chaque scène évolue au fil de la journée, avec pluie, brouillard et événements rares.',
 g1:'Jungle — crépuscule, 32:9 (5120×1440)',g2:'Jungle — jour, 16:9',g3:'Jungle — coucher de soleil, 16:9',g4:'Jungle — nuit, 32:9',g5:'Neon City — nuit, 16:9',g6:'Neon City — pluie, 16:9',g7:'Neon City — feu d’artifice, 32:9',g8:'Neon City — nuit, 21:9',g9:'Neon City — crépuscule, 16:9',
+nt:'Night Train',nts:'sortie le 27 oct.',
+ntl:'Thème 3. Un train traverse une baie au pied d’une ville néon. La nuit, c’est le train-couchettes Nocturne, bleu et or, avec voiture-restaurant et voiture-bar ; le jour, le Zephyr ; parfois un train de fret. Les voitures sont assemblées au hasard : jamais deux fois le même train. Grande roue, phare, ferry, vraie phase de la lune, pluie et brume.',
+nt1:'Night Train — crépuscule doré, 32:9 (5120×1440)',nt2:'Night Train — nuit, 16:9',nt3:'Night Train — jour, 16:9',nt4:'Night Train — nuit de pluie, 21:9',
+ntf1:'<b>27 octobre</b>Sortie publique sur itch.io. Pack à 6 $, mêmes formats que les autres thèmes.',
+ntf2:'<b>Supporters : 20 octobre</b>Vous avez payé 20 $ ou plus sur un pack ? Vous l’avez 7 jours avant.',
+ntf3:'<b>Collection : offert</b>Il est ajouté à la Collection sans supplément.',
+ntf4:'<b>Précommande 6 $</b>Bientôt sur itch.io. Vous payez maintenant, vous téléchargez le jour de la sortie.',
+ntb:'Essayer l’aperçu dans la démo',ntb2:'Suivre sur itch.io',ntn:'En cours de finition : l’aperçu peut encore changer avant la sortie.',
+fm:'Tous les écrans, un seul pack',fml:'Le 16:9, le 21:9 et le 32:9 étaient déjà dans chaque pack. Les nouveaux formats (du 5K2K aux téléphones) sont ajoutés gratuitement à chaque pack et à la Collection, y compris pour ceux qui les ont déjà achetés.',
+fmc:'<li>16:9 <span>jusqu’à 4K</span></li><li>21:9 <span>3440×1440</span></li><li>32:9 <span>5120×1440</span></li><li>5K2K <span>5120×2160</span></li><li>Triple écran <span>7680×1440</span></li><li>16:10 <span>1920×1200 · 2560×1600</span></li><li>Steam Deck <span>1280×800</span></li><li>MacBook Air 15 <span>2880×1864</span></li><li>MacBook Pro 14 <span>3024×1964</span></li><li>iPad Pro <span>2732×2048</span></li><li>iPhone <span>1179×2556 · 1290×2796</span></li><li>Android <span>1440×3120</span></li>',
+fmn:'Des images fixes pour chaque format et des boucles vidéo de 30 secondes. Pour les téléphones : images et vidéos verticales.',
+st:'Stream Pack',sts:'bientôt',
+stl:'Des scènes animées pour OBS, Streamlabs et StreamElements, tirées des fonds d’écran : Starting soon, Be right back, Ending et Just chatting avec cadre webcam. Pour Jungle, Neon City et Night Train.',
+st1:'Jungle — Starting soon',st2:'Neon City — Be right back',st3:'Night Train — Just chatting, cadre webcam',st4:'Jungle — Ending',
+stf1:'<b>8 $ par thème</b>6 $ si vous avez déjà le pack de ce thème ou la Collection.',
+stf2:'<b>Contenu</b>4 scènes, boucles 1080p de 60 secondes en MP4 et WebM, avec et sans texte, images PNG, calque cadre webcam.',
+stf3:'<b>Source navigateur vivante</b>Une version HTML pour OBS qui tourne en direct, avec votre titre et votre sous-titre.',
+stf4:'<b>Licence</b>Pour vos propres chaînes, même monétisées, avec un crédit dans votre panneau ou votre description.',
+stb:'Bientôt sur itch.io',
 p:'Prix',pl:'Un seul paiement, à vous pour toujours. Prix en dollars US, vous pouvez donner plus. Vendu sur itch.io.',
 p1:'Gratuit',p1s:' · prix libre',p1l:'<li>Jungle, HTML interactif 16:9</li><li>Vidéo 1080p et image fixe</li><li>Toutes les fonctions : heure, lune, météo, événements</li>',p1b:'Télécharger',
-p2:'Pack thème',p2s:' · ou plus',p2l:'<li>Tous les formats : 16:9 jusqu’à 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively et app Mac</li><li>Vidéos et images fixes</li><li>Mises à jour du thème offertes</li>',p2b:'Pack Jungle',p2c:'Pack Neon City',
-p3:'Collection',p3s:' · 2 thèmes',p3l:'<li>Jungle + Neon City, tous les formats</li><li>Les thèmes ajoutés à la collection sont offerts aux acheteurs</li><li>Le prix monte à chaque nouveau thème : acheter tôt coûte moins cher</li>',p3b:'Obtenir la collection',
-pn:'Payez 20 $ ou plus sur un pack pour devenir Supporter : votre nom dans les crédits et 7 jours d’avance sur le thème suivant. Juste envie de dire merci ? <a href="https://ko-fi.com/ambiantpixel">Offrez-nous un café sur Ko-fi</a>.',
+p2:'Pack thème',p2s:' · ou plus',p2l:'<li>Tous les formats : 16:9 jusqu’à 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively et app Mac</li><li>Vidéos et images fixes</li><li>Nouveau : 5K2K, triple écran, Steam Deck, MacBook, iPad, téléphones</li><li>Mises à jour du thème offertes</li>',p2b:'Pack Jungle',p2c:'Pack Neon City',
+p3:'Collection',p3s:' · 2 thèmes',p3l:'<li>Jungle + Neon City, tous les formats</li><li>Les thèmes ajoutés à la collection sont offerts aux acheteurs (Night Train le 27 oct.)</li><li>Le prix monte à chaque nouveau thème : acheter tôt coûte moins cher</li>',p3b:'Obtenir la collection',
+pn:'Payez 20 $ ou plus sur un pack pour devenir Supporter : votre nom dans les crédits et 7 jours d’avance sur le thème suivant (Night Train : 20 octobre). Juste envie de dire merci ? <a href="https://ko-fi.com/ambiantpixel">Offrez-nous un café sur Ko-fi</a>.',
 s:'Sur-mesure',sl:'Une scène pour votre stream, votre vitrine ou votre bureau ? Une variante d’un thème, vos couleurs, une taille d’écran précise ? Décrivez votre idée, nous vous envoyons un devis.',sb:'Commander sur Ko-fi',sb2:'Nous écrire',sn:'Usage commercial (boutiques, lieux, pub) : licence sur demande par e-mail.',
-q1:'Comment l’installer sous Windows ?',a1:'<p>Avec <b>Lively Wallpaper</b> (gratuit, Microsoft Store) : « Ajouter un fond », puis choisissez le fichier <code>.html</code>. Avec <b>Wallpaper Engine</b> (Steam), le Pack contient un projet prêt pour chaque format : ouvrez-le depuis l’éditeur ou le Workshop.</p>',
+q1:'Comment l’installer sous Windows ?',a1:'<p>Avec <b>Lively Wallpaper</b> (gratuit, Microsoft Store) : « Ajouter un fond », puis choisissez le fichier <code>.html</code>. Avec <b>Wallpaper Engine</b> (Steam), le Pack contient un projet Wallpaper Engine prêt à l’emploi (tous formats) : dans Wallpaper Engine, choisissez <i>Ouvrir un fond d’écran → Ouvrir depuis un fichier</i> et importez-le. Une version sur le Workshop arrive bientôt.</p>',
 q2:'Et sur Mac ?',a2:'<p>Le Pack contient une petite app Mac qui place le fond derrière les icônes du bureau. L’app n’est pas notarisée : au premier lancement, ouvrez <i>Réglages Système → Confidentialité et sécurité</i> et cliquez sur « Ouvrir quand même ». Vous pouvez aussi utiliser l’app gratuite Plash avec le fichier <code>.html</code>.</p>',
 q3:'Un simple navigateur suffit ?',a3:'<p>Oui. Ouvrez le fichier <code>.html</code> dans Chrome, Edge, Firefox ou Safari et passez en plein écran (F11, ou Ctrl+Cmd+F sur Mac). Ça marche hors ligne.</p>',
-q4:'Et sur mon téléphone ?',a4:'<p><b>Android :</b> oui, avec la vidéo mobile du Pack et n’importe quelle app gratuite de « fond animé vidéo ». <b>iPhone :</b> iOS n’accepte pas les vidéos en fond d’écran ; utilisez les images fixes, ou convertissez la vidéo en Live Photo avec une app tierce (effet limité).</p>',
+q4:'Et sur mon téléphone ?',a4:'<p>Le Pack contient des images et des vidéos verticales aux tailles iPhone (1179×2556, 1290×2796) et Android (1440×3120). <b>Android :</b> utilisez la vidéo avec n’importe quelle app gratuite de « fond animé vidéo ». <b>iPhone :</b> iOS n’accepte pas les vidéos en fond d’écran ; utilisez les images fixes, ou convertissez la vidéo en Live Photo avec une app tierce (effet limité).</p>',
 q5:'Ça ralentit mon ordinateur ?',a5:'<p>Les scènes sont dessinées en basse résolution interne avec une cadence limitée, puis agrandies. Lively et Wallpaper Engine les mettent aussi en pause pendant un jeu ou une app en plein écran.</p>',
+q7:'Il existe une version Steam Deck ou 5K2K ?',a7:'<p>Oui. Chaque pack contient désormais le 1280×800 pour le Steam Deck, le 5120×2160 (5K2K), le 7680×1440 pour trois écrans 16:9 (réglez votre app de fond d’écran sur « Étendre / Span »), le 16:10 et les tailles MacBook et iPad. Mise à jour offerte à ceux qui ont déjà acheté un pack.</p>',
 q6:'Je peux l’utiliser en stream ou sur YouTube ?',a6:'<p>Oui, même monétisé, en arrière-plan, avec le crédit « Wallpaper: Ambiant Pixel ». La revente et la remise en ligne des fichiers sont interdites. Remboursement sous 14 jours.</p>',
 ft:'Des fonds d’écran pixel art vivants.'
 };
