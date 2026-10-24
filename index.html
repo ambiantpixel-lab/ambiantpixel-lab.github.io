@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ambiant Pixel — Living pixel art wallpapers</title>
-<meta name="description" content="Living pixel art wallpapers that follow your clock and the real moon, never the same loop twice. Native 16:9, 21:9, 32:9, 5K2K, triple screen, Steam Deck, Mac, iPad and phones. New theme Night Train on Oct 27. Try the live demo.">
+<meta name="description" content="Living pixel art wallpapers that follow your clock and the real moon, never the same loop twice. Native 16:9, 21:9, 32:9, 5K2K, triple screen, Steam Deck, Mac, iPad and phones. Jungle, Neon City, Night Train, French Countryside, Halloween. Rooftops of Paris on Nov 24.">
 <meta name="theme-color" content="#0b0d14">
 <meta name="google-site-verification" content="Z5jwDaRkhjj6_Ji4HbydWDrvDjmFODgWSSfsPSlFuc8">
 <link rel="canonical" href="https://ambiantpixel-lab.github.io/">
@@ -54,7 +54,7 @@ header{position:sticky;top:0;z-index:5;background:rgba(11,13,20,.92);backdrop-fi
 .hero h1{font-size:clamp(1.6rem,4vw,2.6rem);margin:0 0 .25em}
 .hero .lead{margin-bottom:1.1em}
 .hero h1 em{font-style:normal;color:var(--acc)}
-.screen{width:min(100%,calc((100vh - 380px)*var(--arn,1.778)));min-width:min(100%,560px);margin:0 auto;position:relative;background:#000;border:var(--px) solid #000;box-shadow:0 0 0 var(--px) var(--line),0 0 0 calc(var(--px)*2) #000,0 18px 60px rgba(0,0,0,.6);aspect-ratio:var(--ar,16/9);overflow:hidden;transition:aspect-ratio .2s}
+.screen{width:min(100%,calc((100vh - 470px)*var(--arn,1.778)));min-width:min(100%,560px);margin:0 auto;position:relative;background:#000;border:var(--px) solid #000;box-shadow:0 0 0 var(--px) var(--line),0 0 0 calc(var(--px)*2) #000,0 18px 60px rgba(0,0,0,.6);aspect-ratio:var(--ar,16/9);overflow:hidden;transition:aspect-ratio .2s}
 .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
 .tag{position:absolute;left:8px;top:8px;font:700 .7rem var(--mono);background:rgba(0,0,0,.7);color:var(--ok);padding:2px 6px;pointer-events:none}
 .tag::before{content:"\25CF ";}
@@ -114,7 +114,7 @@ details[open] summary::before{content:"\2212"}
 details p,details ul{color:var(--mute);margin:0 0 14px}
 footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--mute);font-size:.9rem}
 footer .row{justify-content:space-between}
-@media (min-width:1000px){.ctl{grid-template-columns:auto auto minmax(180px,1fr) auto auto;gap:28px}.seg{flex-wrap:nowrap}}
+@media (min-width:1000px){.ctl{grid-template-columns:minmax(180px,1fr) auto auto;gap:14px 28px}.ctl .themes{grid-column:1/-1}}
 .hintrow{justify-content:space-between;margin-top:10px}.hintrow .hint{margin:0}
 .uw{margin-top:32px}.uw h2{font-size:clamp(1.1rem,2.6vw,1.5rem);margin:0 0 .3em}.uw figure{margin:12px 0 0;background:var(--bg2);border:2px solid var(--line)}.uw figcaption{font:.8rem var(--mono);color:var(--mute);padding:6px 10px}
 .uwv video{display:block;width:100%;height:auto;aspect-ratio:32/9;image-rendering:pixelated;background:#000}
@@ -144,6 +144,15 @@ footer .row{justify-content:space-between}
 .chips li span{color:var(--mute)}
 @media (max-width:760px){.ntg,.stg{grid-template-columns:1fr}}
 .guides ul{list-style:none;padding:0;margin:0;columns:2;column-gap:24px}.guides li{margin:.15em 0}.guides p{margin:0 0 .4em}@media (max-width:760px){.guides ul{columns:1}}
+.soon.new{background:var(--ok);color:#03140a}
+.sale{background:#2a1406;border-bottom:2px solid #ff8a1f;color:#ffe2c4}
+.sale .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding-top:10px;padding-bottom:10px}
+.sale p{margin:0;font-size:.95rem}.sale b{font-family:var(--mono);color:#ffb347}
+.cta.sm{font-size:.8rem;padding:6px 10px;margin:0;box-shadow:none}
+.cta.orange{background:#ff8a1f;color:#1a0b00;box-shadow:0 var(--px) 0 #a3520e}.cta.orange:hover{background:#ffb347}
+.onsale{display:none;font:700 .85rem var(--mono);color:#ffb347;margin:.2em 0 0}
+.sale-on .onsale{display:block}
+.cards2 .cta{margin-right:4px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.screen{transition:none}}
 </style>
 </head>
@@ -154,7 +163,7 @@ footer .row{justify-content:space-between}
  <nav aria-label="Main" style="margin-left:auto"><ul>
   <li><a href="#demo" data-i18n="n1">Live demo</a></li>
   <li><a href="#gallery" data-i18n="n2">Gallery</a></li>
-  <li><a href="#nighttrain">Night Train</a></li>
+  <li><a href="#nighttrain" data-i18n="n6">New themes</a></li>
   <li><a href="#stream" data-i18n="n5">Stream</a></li>
   <li><a href="#pricing" data-i18n="n3">Pricing</a></li>
   <li><a href="#custom" data-i18n="n4">Custom</a></li>
@@ -162,6 +171,7 @@ footer .row{justify-content:space-between}
  </ul></nav>
  <button class="lang" id="lang" type="button" aria-label="Passer en français">FR</button>
 </div></header>
+<div class="sale" id="sale" hidden><div class="wrap"><p><b data-i18n="hs0">Halloween Sale: 30% off every wallpaper</b> <span data-i18n="hs1">on itch.io, all 8 paid packs together for $42 instead of $60. Ends</span> <span id="saleEnd">November 5</span>.</p><a class="cta sm orange" href="https://itch.io/s/209347/halloween-sale-30-off-every-ambiant-pixel-wallpaper" data-i18n="hsb">See the sale &#8599;</a></div></div>
 
 <main id="main">
 <section class="hero" id="top"><div class="wrap" id="demo">
@@ -174,17 +184,19 @@ footer .row{justify-content:space-between}
  </div>
 
  <form class="ctl" id="ctl" onsubmit="return false" aria-label="Demo controls">
-  <fieldset><legend data-i18n="c1">Theme</legend><div class="seg">
+  <fieldset class="themes"><legend data-i18n="c1">Theme</legend><div class="seg">
    <input type="radio" name="theme" id="t-j" value="jungle" checked><label for="t-j">Jungle</label>
    <input type="radio" name="theme" id="t-n" value="neoncity"><label for="t-n">Neon City</label>
-   <input type="radio" name="theme" id="t-t" value="nighttrain"><label for="t-t" data-i18n="c1t">Night Train <small>preview</small></label>
+   <input type="radio" name="theme" id="t-t" value="nighttrain"><label for="t-t">Night Train</label>
+   <input type="radio" name="theme" id="t-c" value="countryside"><label for="t-c" data-i18n="c1c">French Countryside</label>
+   <input type="radio" name="theme" id="t-r" value="rooftops"><label for="t-r" data-i18n="c1r">Rooftops of Paris <small>preview</small></label>
   </div></fieldset>
   <div class="full"><label class="lbl" for="hour" data-i18n="c2">Time of day</label>
    <div class="row"><input type="range" id="hour" min="0" max="24" step="0.25" value="12" aria-describedby="hourOut"><output class="out" id="hourOut" for="hour">12:00</output></div>
    <div class="row"><input type="checkbox" id="live" checked><label for="live" data-i18n="c2b">Use my local time</label></div>
   </div>
   <div><span class="lbl" data-i18n="c3">Weather</span>
-   <div class="row"><input type="checkbox" id="rain"><label for="rain" data-i18n="c3b">Rain</label></div>
+   <div class="row"><input type="checkbox" id="rain"><label for="rain" data-i18n="c3b">Rain</label><span class="row" id="snowRow" hidden><input type="checkbox" id="snow"><label for="snow" data-i18n="c3c">Snow</label></span></div>
   </div>
   <div><label class="lbl" for="ev" data-i18n="c5">Event</label>
    <div class="row"><select id="ev"></select><button class="btn" type="button" id="go" data-i18n="c5b">Trigger</button></div>
@@ -214,7 +226,7 @@ footer .row{justify-content:space-between}
 
 <section id="gallery"><div class="wrap">
  <h2 data-i18n="g">Gallery</h2>
- <p class="lead" data-i18n="gl">Two themes out now, a third one on October 27. Each scene changes through the day, with rain, fog and rare events.</p>
+ <p class="lead" data-i18n="gl">Five themes out now, a sixth on November 24. Each scene changes through the day, with rain, fog and rare events.</p>
  <div class="gal">
   <figure class="wide"><a href="img/jungle-dusk-32x9.webp"><img src="img/jungle-dusk-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Jungle in 32:9 at dusk: pink sky, waterfall on the left, rope bridges and a stone temple on the right"></a><figcaption data-i18n="g1">Jungle — dusk, 32:9 (5120×1440)</figcaption></figure>
   <figure><a href="img/jungle-day-16x9.webp"><img src="img/jungle-day-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Jungle by day: blue sky, giant trees, a waterfall and a toucan on a branch"></a><figcaption data-i18n="g2">Jungle — day, 16:9</figcaption></figure>
@@ -229,7 +241,7 @@ footer .row{justify-content:space-between}
 </div></section>
 
 <section id="nighttrain"><div class="wrap">
- <h2><span data-i18n="nt">Night Train</span> <span class="soon" data-i18n="nts">coming Oct 27</span></h2>
+ <h2><span data-i18n="nt">Night Train</span> <span class="soon new" data-i18n="nts">new</span></h2>
  <p class="lead" data-i18n="ntl">Theme 3. A train crosses a bay at the foot of a neon city. By night it is the Nocturne sleeper, blue and gold, with a dining car and a bar car; by day the Zephyr; sometimes a freight train. The cars are put together at random, so no two trains are the same. Ferris wheel, lighthouse, ferry, real moon phase, rain and fog.</p>
  <div class="ntg">
   <figure class="wide"><a href="img/nighttrain-dusk-32x9.webp"><img src="img/nighttrain-dusk-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Night Train in 32:9 at golden dusk: a long train on a bridge over a bay, a city skyline and a Ferris wheel behind"></a><figcaption data-i18n="nt1">Night Train — golden dusk, 32:9 (5120×1440)</figcaption></figure>
@@ -238,13 +250,59 @@ footer .row{justify-content:space-between}
   <figure class="wide uw21"><a href="img/nighttrain-rain-21x9.webp"><img src="img/nighttrain-rain-21x9.webp" width="1600" height="670" loading="lazy" decoding="async" alt="Night Train in 21:9 on a rainy night, neon reflections in the water"></a><figcaption data-i18n="nt4">Night Train — rainy night, 21:9</figcaption></figure>
  </div>
  <ul class="facts">
-  <li data-i18n="ntf1"><b>October 27</b>Public release on itch.io. Pack $6, same formats as the other themes.</li>
-  <li data-i18n="ntf2"><b>Supporters: October 20</b>Paid $20 or more on a pack? You get it 7 days early.</li>
-  <li data-i18n="ntf3"><b>Collection owners: free</b>It is added to the Collection at no extra cost.</li>
-  <li data-i18n="ntf4"><b>Pre-order $6</b>Coming soon on itch.io. Pay now, download on release day.</li>
+  <li data-i18n="ntf1"><b>Out now, $6</b>On itch.io, same formats as the other themes, from phones to 32:9.</li>
+  <li data-i18n="ntf2"><b>In the Collection</b>Part of the $14 Collection, added free for people who already owned it.</li>
+  <li data-i18n="ntf3"><b>8 events</b>Night train, freight train, aurora, fireworks, whale, storm, shooting star and a secret.</li>
+  <li data-i18n="ntf4"><b>Everywhere</b>Wallpaper Engine, Lively, the Mac app, videos and stills.</li>
  </ul>
- <p><a class="cta" href="#demo" id="ntTry" data-i18n="ntb">Try the preview in the live demo</a><a class="cta ghost" href="https://ambiantpixel.itch.io" data-i18n="ntb2">Follow on itch.io</a></p>
- <p class="hint" data-i18n="ntn">Work in progress: the preview can still change before release.</p>
+ <p><a class="cta" href="https://ambiantpixel.itch.io/night-train" data-i18n="ntb2">Get Night Train, $6</a><a class="cta ghost" href="#demo" data-try="nighttrain" data-i18n="ntb">Try it in the live demo</a></p>
+</div></section>
+
+<section id="countryside"><div class="wrap">
+ <h2><span data-i18n="fc">French Countryside</span> <span class="soon new" data-i18n="fcs">new</span></h2>
+ <p class="lead" data-i18n="fcl">Theme 5. A hilltop village and its church, patchwork fields, a river under a stone bridge and sheep in the meadow. The fields follow the real season: green in spring, golden in summer, russet in autumn, bare and snowy in winter. A little car drives up to the village, mist rises at dawn, fireflies on summer nights.</p>
+ <div class="ntg">
+  <figure class="wide"><a href="img/countryside-summer-32x9.webp"><img src="img/countryside-summer-32x9.webp" width="2048" height="576" loading="lazy" decoding="async" alt="French Countryside in 32:9 on a summer evening: hilltop village with a church, golden fields, a river and a stone bridge"></a><figcaption data-i18n="fc1">French Countryside — summer evening, 32:9 (5120×1440)</figcaption></figure>
+  <figure><a href="img/countryside-autumn-16x9.webp"><img src="img/countryside-autumn-16x9.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="French Countryside in autumn: russet trees around the village at golden hour"></a><figcaption data-i18n="fc2">Autumn, 16:9</figcaption></figure>
+  <figure><a href="img/countryside-winter-16x9.webp"><img src="img/countryside-winter-16x9.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="French Countryside in winter, snow on the fields and roofs"></a><figcaption data-i18n="fc3">Winter snow, 16:9</figcaption></figure>
+  <figure class="wide uw21"><a href="img/countryside-night-21x9.webp"><img src="img/countryside-night-21x9.webp" width="1376" height="576" loading="lazy" decoding="async" alt="French Countryside on a summer night in 21:9, lit windows and fireflies"></a><figcaption data-i18n="fc4">Summer night, 21:9</figcaption></figure>
+ </div>
+ <ul class="facts">
+  <li data-i18n="fcf1"><b>Out now, $6</b>On itch.io, every format from phones to 32:9.</li>
+  <li data-i18n="fcf2"><b>Real seasons</b>The landscape changes with the date, not just the time of day.</li>
+  <li data-i18n="fcf3"><b>Rain and snow</b>Weather comes on its own; snow settles in winter.</li>
+  <li data-i18n="fcf4"><b>Sold separately</b>Not part of the Collection for now.</li>
+ </ul>
+ <p><a class="cta" href="https://ambiantpixel.itch.io/french-countryside" data-i18n="fcb">Get French Countryside, $6</a><a class="cta ghost" href="#demo" data-try="countryside" data-i18n="fcb2">Try it in the live demo</a></p>
+</div></section>
+
+<section id="rooftops"><div class="wrap">
+ <h2><span data-i18n="rp">Rooftops of Paris</span> <span class="soon" data-i18n="rps">coming November 24</span></h2>
+ <p class="lead" data-i18n="rpl">Theme 4. The zinc roofs and chimney pots of Paris under a sky that follows your clock. Smoke rises when it is cold, windows light up one by one in the evening, a cat walks along the ridge, pigeons come and go, string lights glow on a rooftop terrace. In winter, snow settles on the roofs.</p>
+ <div class="ntg">
+  <figure class="wide"><a href="img/rooftops-golden-32x9.webp"><img src="img/rooftops-golden-32x9.webp" width="2048" height="576" loading="lazy" decoding="async" alt="Rooftops of Paris in 32:9 at golden hour: zinc roofs, chimneys and a cat on the ridge"></a><figcaption data-i18n="rp1">Rooftops of Paris — golden hour, 32:9 (5120×1440)</figcaption></figure>
+  <figure><a href="img/rooftops-snow-16x9.webp"><img src="img/rooftops-snow-16x9.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Paris rooftops on a snowy morning"></a><figcaption data-i18n="rp2">Snowy morning, 16:9</figcaption></figure>
+  <figure><a href="img/rooftops-night-16x9.webp"><img src="img/rooftops-night-16x9.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Paris rooftops at night with lit windows"></a><figcaption data-i18n="rp3">Night, 16:9</figcaption></figure>
+  <figure class="wide uw21"><a href="img/rooftops-snownight-21x9.webp"><img src="img/rooftops-snownight-21x9.webp" width="1376" height="576" loading="lazy" decoding="async" alt="Paris rooftops in 21:9 on a snowy evening, string lights on a terrace"></a><figcaption data-i18n="rp4">Snowy evening, 21:9</figcaption></figure>
+ </div>
+ <ul class="facts">
+  <li data-i18n="rpf1"><b>November 24</b>Release on itch.io. Pack $6, every format from phones to 32:9.</li>
+  <li data-i18n="rpf2"><b>Collection owners: free</b>Added to the Collection on release day.</li>
+  <li data-i18n="rpf3"><b>Snow for December</b>Snow on the roofs in winter, or any time you like.</li>
+ </ul>
+ <p><a class="cta" href="#demo" data-try="rooftops" data-i18n="rpb">Try the preview in the live demo</a><a class="cta ghost" href="https://ambiantpixel.itch.io" data-i18n="rpb2">Follow on itch.io</a></p>
+ <p class="hint" data-i18n="rpn">No pre-order: the page opens on release day.</p>
+</div></section>
+
+<section id="halloween"><div class="wrap">
+ <h2><span data-i18n="hw">Halloween Edition</span> <span class="soon" data-i18n="hws">Jungle + Neon City</span></h2>
+ <p class="lead" data-i18n="hwl">Jungle and Neon City dressed for Halloween: a big orange moon, glowing pumpkins along the river and on the rooftops, bats, black cats and a green fog. Live, from 32:9 to phone, and spooky all year long.</p>
+ <div class="ntg">
+  <figure class="wide"><a href="img/halloween-jungle-32x9.webp"><img src="img/halloween-jungle-32x9.webp" width="2000" height="563" loading="lazy" decoding="async" alt="Jungle Halloween in 32:9 at night: orange moon, bats, pumpkins on the temple and green fog"></a><figcaption data-i18n="hw1">Jungle Halloween — night, 32:9</figcaption></figure>
+  <figure><a href="img/halloween-jungle-16x9.webp"><img src="img/halloween-jungle-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Jungle Halloween at dusk, burnt orange sky"></a><figcaption data-i18n="hw2">Jungle Halloween — dusk, 16:9</figcaption></figure>
+  <figure><a href="img/halloween-neoncity-16x9.webp"><img src="img/halloween-neoncity-16x9.webp" width="1600" height="900" loading="lazy" decoding="async" alt="Neon City Halloween at night: orange and violet signs, pumpkins on the rooftops"></a><figcaption data-i18n="hw3">Neon City Halloween — night, 16:9</figcaption></figure>
+ </div>
+ <p><a class="cta orange" href="https://ambiantpixel.itch.io/halloween-edition" data-i18n="hwb">Get the Halloween Edition, $6</a></p>
 </div></section>
 
 <section id="formats"><div class="wrap">
@@ -255,12 +313,12 @@ footer .row{justify-content:space-between}
 </div></section>
 
 <section id="stream"><div class="wrap">
- <h2><span data-i18n="st">Stream Pack</span> <span class="soon" data-i18n="sts">coming soon</span></h2>
- <p class="lead" data-i18n="stl">Animated scenes for OBS, Streamlabs and StreamElements, made from the wallpapers: Starting soon, Be right back, Ending and Just chatting with a webcam frame. For Jungle, Neon City and Night Train.</p>
+ <h2><span data-i18n="st">Stream Pack</span> <span class="soon new" data-i18n="sts">out now</span></h2>
+ <p class="lead" data-i18n="stl">Animated scenes for OBS, Streamlabs and StreamElements, made from the wallpapers: Starting soon, Be right back, Ending and Just chatting with a webcam frame. For Jungle and Neon City.</p>
  <div class="stg">
   <figure><a href="img/stream-jungle-starting-soon.webp"><img src="img/stream-jungle-starting-soon.webp" width="960" height="540" loading="lazy" decoding="async" alt="Jungle stream scene with the text Starting soon on a translucent panel"></a><figcaption data-i18n="st1">Jungle — Starting soon</figcaption></figure>
   <figure><a href="img/stream-neoncity-brb.webp"><img src="img/stream-neoncity-brb.webp" width="960" height="540" loading="lazy" decoding="async" alt="Neon City stream scene with the text Be right back"></a><figcaption data-i18n="st2">Neon City — Be right back</figcaption></figure>
-  <figure><a href="img/stream-nighttrain-just-chatting.webp"><img src="img/stream-nighttrain-just-chatting.webp" width="960" height="540" loading="lazy" decoding="async" alt="Night Train Just chatting scene with an amber neon webcam frame"></a><figcaption data-i18n="st3">Night Train — Just chatting, webcam frame</figcaption></figure>
+  <figure><a href="img/stream-neoncity-just-chatting.webp"><img src="img/stream-neoncity-just-chatting.webp" width="960" height="540" loading="lazy" decoding="async" alt="Neon City Just chatting scene with a neon webcam frame"></a><figcaption data-i18n="st3">Neon City — Just chatting, webcam frame</figcaption></figure>
   <figure><a href="img/stream-jungle-ending.webp"><img src="img/stream-jungle-ending.webp" width="960" height="540" loading="lazy" decoding="async" alt="Jungle stream scene used at the end of a stream, with a text panel"></a><figcaption data-i18n="st4">Jungle — Ending</figcaption></figure>
  </div>
  <ul class="facts">
@@ -269,7 +327,8 @@ footer .row{justify-content:space-between}
   <li data-i18n="stf3"><b>Live browser source</b>An HTML version for OBS that keeps running live, with your own title and subtitle.</li>
   <li data-i18n="stf4"><b>License</b>Use it on your own channels, even monetized, with a credit in your panel or description.</li>
  </ul>
- <p><a class="cta pink" href="https://ambiantpixel.itch.io" data-i18n="stb">Coming soon on itch.io</a></p>
+ <p class="onsale" data-i18n="oss">Halloween Sale: $5.60 each</p>
+ <p><a class="cta" href="https://ambiantpixel.itch.io/jungle-stream-pack" data-i18n="stb">Jungle Stream Pack, $8</a><a class="cta pink" href="https://ambiantpixel.itch.io/neon-city-stream-pack" data-i18n="stb2">Neon City Stream Pack, $8</a></p>
 </div></section>
 
 <section id="pricing"><div class="wrap">
@@ -282,17 +341,17 @@ footer .row{justify-content:space-between}
    <div><a class="cta ghost" href="https://ambiantpixel.itch.io/jungle-free" data-i18n="p1b">Download free</a></div>
   </div>
   <div class="card best" data-badge="32:9 + 4K" id="packCard">
-   <h3 data-i18n="p2">Theme pack</h3><div class="amt">$6<small data-i18n="p2s"> · or more</small></div>
+   <h3 data-i18n="p2">Theme pack</h3><div class="amt">$6<small data-i18n="p2s"> · or more</small></div><p class="onsale" data-i18n="os6">Halloween Sale: $4.20</p>
    <ul data-i18n="p2l"><li>Every format: 16:9 up to 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively and Mac app</li><li>Videos and stills</li><li>New: 5K2K, triple screen, Steam Deck, MacBook, iPad, phones</li><li>Free updates of the theme</li></ul>
-   <div><a class="cta" href="https://ambiantpixel.itch.io/jungle" data-i18n="p2b">Jungle pack</a><a class="cta pink" href="https://ambiantpixel.itch.io/neon-city" data-i18n="p2c">Neon City pack</a></div>
+   <div class="cards2"><a class="cta" href="https://ambiantpixel.itch.io/jungle" data-i18n="p2b">Jungle</a><a class="cta pink" href="https://ambiantpixel.itch.io/neon-city" data-i18n="p2c">Neon City</a><a class="cta" href="https://ambiantpixel.itch.io/night-train">Night Train</a><a class="cta pink" href="https://ambiantpixel.itch.io/french-countryside" data-i18n="p2d">French Countryside</a><a class="cta orange" href="https://ambiantpixel.itch.io/halloween-edition" data-i18n="p2e">Halloween Edition</a></div>
   </div>
   <div class="card">
-   <h3 data-i18n="p3">Collection</h3><div class="amt">$10<small data-i18n="p3s"> · 2 themes</small></div>
-   <ul data-i18n="p3l"><li>Jungle + Neon City, every format</li><li>Themes added to the collection are free for owners (Night Train on Oct 27)</li><li>Price goes up with each new theme: earlier is cheaper</li></ul>
+   <h3 data-i18n="p3">Collection</h3><div class="amt">$14<small data-i18n="p3s"> · 3 themes</small></div><p class="onsale" data-i18n="os14">Halloween Sale: $9.80</p>
+   <ul data-i18n="p3l"><li>Jungle + Neon City + Night Train, every format</li><li>Rooftops of Paris added on November 24, free for owners</li><li>Price goes up with each new theme: earlier is cheaper</li></ul>
    <div><a class="cta ghost" href="https://ambiantpixel.itch.io/collection" data-i18n="p3b">Get the collection</a></div>
   </div>
  </div>
- <p class="note" data-i18n="pn">Pay $20 or more on any pack to become a Supporter: your name in the credits and 7-day early access to the next theme (Night Train: October 20). Just want to say thanks? <a href="https://ko-fi.com/ambiantpixel">Buy us a coffee on Ko-fi</a>.</p>
+ <p class="note" data-i18n="pn">Pay $20 or more on any pack to become a Supporter: your name in the credits and 7-day early access to the next theme. Just want to say thanks? <a href="https://ko-fi.com/ambiantpixel">Buy us a coffee on Ko-fi</a>.</p>
 </div></section>
 
 <section id="custom"><div class="wrap custom">
@@ -328,6 +387,8 @@ footer .row{justify-content:space-between}
  <li><a href="/cyberpunk-animated-wallpaper/">Cyberpunk animated wallpaper</a></li>
  <li><a href="/jungle-animated-wallpaper/">Jungle animated wallpaper</a></li>
  <li><a href="/night-train-wallpaper/">Night Train wallpaper</a></li>
+ <li><a href="/french-countryside-wallpaper/">French Countryside wallpaper</a></li>
+ <li><a href="/paris-rooftops-wallpaper/">Paris rooftops wallpaper</a></li>
  <li><a href="/obs-stream-background-pixel-art/">OBS stream backgrounds</a></li>
  <li><a href="/mac-live-wallpaper/">Mac live wallpaper</a></li>
  <li><a href="/lively-wallpaper-pixel-art/">Lively Wallpaper (free)</a></li>
@@ -346,8 +407,10 @@ var frame=$('#frame'),screen=$('#screen'),hour=$('#hour'),out=$('#hourOut'),live
 var EVENTS={
  jungle:[['parrot','Parrots','Perroquets'],['flock','Bird flock','Vol d’oiseaux'],['croc','Crocodile','Crocodile'],['jag','Jaguar','Jaguar'],['snake','Snake','Serpent'],['duck','Duck','Canard'],['star','Shooting star','Étoile filante'],['ufo','???','???']],
  neoncity:[['train','Night train','Train de nuit'],['blimp','Blimp','Dirigeable'],['police','Police car','Voiture de police'],['drone','Delivery drone','Drone de livraison'],['koi','Koi balloon','Ballon carpe koï'],['fireworks','Fireworks','Feu d’artifice'],['star','Shooting star','Étoile filante'],['glitch','Glitch','Glitch'],['blackout','Blackout','Panne de courant'],['ufo','???','???']],
- nighttrain:[['train','Night train','Train de nuit'],['freight','Freight train','Train de fret'],['aurora','Aurora','Aurore boréale'],['fireworks','Fireworks','Feu d’artifice'],['whale','Whale','Baleine'],['star','Shooting star','Étoile filante'],['storm','Storm','Orage'],['ufo','???','???']]
+ nighttrain:[['train','Night train','Train de nuit'],['freight','Freight train','Train de fret'],['aurora','Aurora','Aurore boréale'],['fireworks','Fireworks','Feu d’artifice'],['whale','Whale','Baleine'],['star','Shooting star','Étoile filante'],['storm','Storm','Orage'],['ufo','???','???']],
+ countryside:[],rooftops:[]
 };
+var SNOW={countryside:1,rooftops:1},snow=$('#snow'),snowRow=$('#snowRow');
 var lang='en';
 function theme(){return document.querySelector('input[name=theme]:checked').value}
 function fmtH(h){var m=Math.round(h*60)%1440;return String(m/60|0).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
@@ -355,11 +418,14 @@ function url(){
  var a=[];/* démo limitée au 16:9 (verrou dans demo/*.html) */
  if(!live.checked)a.push('hour='+hour.value);
  if(rain.checked)a.push('rain=0.7');
+ if(snow.checked&&SNOW[theme()])a.push('snow=1');
  return 'demo/'+theme()+'.html'+(a.length?'?'+a.join('&'):'');
 }
 function fillEvents(){
  var t=theme(),i=lang==='fr'?2:1,cur=ev.value;ev.innerHTML='';
  EVENTS[t].forEach(function(e){var o=document.createElement('option');o.value=e[0];o.textContent=e[i];ev.appendChild(o)});
+ var none=!EVENTS[t].length;if(none){var o=document.createElement('option');o.value='';o.textContent=lang==='fr'?'Tout arrive tout seul':'Everything happens on its own';ev.appendChild(o)}
+ ev.disabled=none;$('#go').disabled=none;snowRow.hidden=!SNOW[t];
  if(EVENTS[t].some(function(e){return e[0]===cur}))ev.value=cur;
 }
 var tmr=0;
@@ -374,7 +440,7 @@ function apply(){
 hour.addEventListener('input',function(){out.textContent=fmtH(+hour.value);live.checked=false});
 hour.addEventListener('change',apply);
 live.addEventListener('change',function(){if(live.checked){var d=new Date();out.textContent=fmtH(d.getHours()+d.getMinutes()/60)}apply()});
-rain.addEventListener('change',apply);
+rain.addEventListener('change',apply);snow.addEventListener('change',apply);
 document.querySelectorAll('input[name=theme]').forEach(function(r){r.addEventListener('change',function(){if(r.name==='theme')fillEvents();apply()})});
 function send(msg){
  try{frame.contentWindow.postMessage(msg,location.protocol==='file:'?'*':location.origin)}catch(e){}
@@ -397,12 +463,18 @@ document.addEventListener('visibilitychange',update);
 frame.addEventListener('load',function(){setPause(!visible||document.hidden,true)});
 (function(){var d=new Date();out.textContent=fmtH(d.getHours()+d.getMinutes()/60);hour.value=Math.round((d.getHours()+d.getMinutes()/60)*4)/4})();
 fillEvents();
-$('#ntTry').addEventListener('click',function(){var r=$('#t-t');if(!r.checked){r.checked=true;r.dispatchEvent(new Event('change'))}});
+document.querySelectorAll('[data-try]').forEach(function(a){a.addEventListener('click',function(){var r=document.querySelector('input[name=theme][value='+a.dataset.try+']');if(r&&!r.checked){r.checked=true;r.dispatchEvent(new Event('change'))}})});
+/* soldes Halloween itch : 2026-10-25 17:00 UTC -> 2026-11-04 18:00 UTC (dates de la page itch) ; le bandeau disparait tout seul ensuite */
+var SALE0=Date.parse('2026-10-25T17:00:00Z'),SALE1=Date.parse('2026-11-04T18:00:00Z'),saleOn=Date.now()>=SALE0&&Date.now()<SALE1;
+function saleEnd(){try{$('#saleEnd').textContent=new Date(SALE1).toLocaleString(lang==='fr'?'fr-FR':'en-US',{month:'long',day:'numeric',hour:'numeric',minute:'2-digit'})}catch(e){}}
+if(saleOn){$('#sale').hidden=false;document.body.classList.add('sale-on');saleEnd()}
 /* vidéo ultrawide : pas d'animation si l'utilisateur la refuse */
 try{if(matchMedia('(prefers-reduced-motion: reduce)').matches){var v=$('#uwv');v.removeAttribute('autoplay');v.pause()}}catch(e){}
 /* i18n: EN lives in the HTML, FR here */
 var FR={
-skip:'Aller au contenu',n1:'Démo',n2:'Galerie',n3:'Prix',n4:'Sur-mesure',n5:'Stream',c1t:'Night Train <small>aperçu</small>',
+skip:'Aller au contenu',n1:'Démo',n2:'Galerie',n3:'Prix',n4:'Sur-mesure',n5:'Stream',n6:'Nouveaux thèmes',c1c:'Campagne française',c1r:'Toits de Paris <small>aperçu</small>',c3c:'Neige',
+hs0:'Soldes Halloween : -30 % sur tous les fonds d’écran',hs1:'sur itch.io, les 8 packs payants ensemble pour 42 $ au lieu de 60 $. Fin le',hsb:'Voir les soldes &#8599;',
+os6:'Soldes Halloween : 4,20 $',os14:'Soldes Halloween : 9,80 $',oss:'Soldes Halloween : 5,60 $ chacun',
 h1:'Des fonds d’écran pixel art <em>vivants</em>.',
 lead:'Ils suivent votre heure et la vraie lune, changent avec la météo et ne rejouent jamais la même boucle. Ci-dessous, c’est le vrai fond d’écran qui tourne dans votre navigateur, en 16:9 : essayez-le. Le 21:9 et le 32:9 natifs sont dans le pack.',
 live:'EN DIRECT',c1:'Thème',c4:'Format',c2:'Heure',c2b:'Mon heure locale',c3:'Météo',c3b:'Pluie',c5:'Événement',c5b:'Déclencher',c6b:'Plein écran dans un onglet &#8599;',
@@ -413,32 +485,45 @@ f2:'<b>Jamais la même boucle</b>Animaux, météo et événements sont calculés
 f3:'<b>Ultra-large natif</b>Composé pour le 21:9 et le 5120&times;1440 (32:9), pas étiré.',
 f4:'<b>Léger</b>Fonctionne dans Lively, Wallpaper Engine, une app Mac ou n’importe quel navigateur.',
 f5:'<b>Tous les écrans</b>Désormais aussi en 5K2K, triple écran, Steam Deck, MacBook, iPad, iPhone et Android : <a href="#formats">voir les formats</a>.',
-g:'Galerie',gl:'Deux thèmes disponibles, un troisième le 27 octobre. Chaque scène évolue au fil de la journée, avec pluie, brouillard et événements rares.',
+g:'Galerie',gl:'Cinq thèmes disponibles, un sixième le 24 novembre. Chaque scène évolue au fil de la journée, avec pluie, brouillard et événements rares.',
 g1:'Jungle — crépuscule, 32:9 (5120×1440)',g2:'Jungle — jour, 16:9',g3:'Jungle — coucher de soleil, 16:9',g4:'Jungle — nuit, 32:9',g5:'Neon City — nuit, 16:9',g6:'Neon City — pluie, 16:9',g7:'Neon City — feu d’artifice, 32:9',g8:'Neon City — nuit, 21:9',g9:'Neon City — crépuscule, 16:9',
-nt:'Night Train',nts:'sortie le 27 oct.',
+nt:'Night Train',nts:'nouveau',
 ntl:'Thème 3. Un train traverse une baie au pied d’une ville néon. La nuit, c’est le train-couchettes Nocturne, bleu et or, avec voiture-restaurant et voiture-bar ; le jour, le Zephyr ; parfois un train de fret. Les voitures sont assemblées au hasard : jamais deux fois le même train. Grande roue, phare, ferry, vraie phase de la lune, pluie et brume.',
 nt1:'Night Train — crépuscule doré, 32:9 (5120×1440)',nt2:'Night Train — nuit, 16:9',nt3:'Night Train — jour, 16:9',nt4:'Night Train — nuit de pluie, 21:9',
-ntf1:'<b>27 octobre</b>Sortie publique sur itch.io. Pack à 6 $, mêmes formats que les autres thèmes.',
-ntf2:'<b>Supporters : 20 octobre</b>Vous avez payé 20 $ ou plus sur un pack ? Vous l’avez 7 jours avant.',
-ntf3:'<b>Collection : offert</b>Il est ajouté à la Collection sans supplément.',
-ntf4:'<b>Précommande 6 $</b>Bientôt sur itch.io. Vous payez maintenant, vous téléchargez le jour de la sortie.',
-ntb:'Essayer l’aperçu dans la démo',ntb2:'Suivre sur itch.io',ntn:'En cours de finition : l’aperçu peut encore changer avant la sortie.',
+ntf1:'<b>Disponible, 6 $</b>Sur itch.io, mêmes formats que les autres thèmes, du téléphone au 32:9.',
+ntf2:'<b>Dans la Collection</b>Inclus dans la Collection à 14 $, ajouté gratuitement pour ceux qui l’avaient déjà.',
+ntf3:'<b>8 événements</b>Train de nuit, train de fret, aurore boréale, feu d’artifice, baleine, orage, étoile filante et un secret.',
+ntf4:'<b>Partout</b>Wallpaper Engine, Lively, l’app Mac, vidéos et images fixes.',
+ntb:'L’essayer dans la démo',ntb2:'Obtenir Night Train, 6 $',
+fc:'Campagne française',fcs:'nouveau',
+fcl:'Thème 5. Un village perché et son église, des champs en patchwork, une rivière sous un pont de pierre et des moutons au pré. Les champs suivent la vraie saison : verts au printemps, dorés l’été, roux à l’automne, nus et enneigés l’hiver. Une petite voiture monte au village, la brume se lève à l’aube, des lucioles les nuits d’été.',
+fc1:'Campagne française — soir d’été, 32:9 (5120×1440)',fc2:'Automne, 16:9',fc3:'Neige d’hiver, 16:9',fc4:'Nuit d’été, 21:9',
+fcf1:'<b>Disponible, 6 $</b>Sur itch.io, tous les formats du téléphone au 32:9.',fcf2:'<b>Vraies saisons</b>Le paysage change avec la date, pas seulement avec l’heure.',fcf3:'<b>Pluie et neige</b>La météo change toute seule ; la neige tient l’hiver.',fcf4:'<b>Vendu à part</b>Pas dans la Collection pour l’instant.',
+fcb:'Obtenir Campagne française, 6 $',fcb2:'L’essayer dans la démo',
+rp:'Toits de Paris',rps:'sortie le 24 novembre',
+rpl:'Thème 4. Les toits de zinc et les cheminées de Paris sous un ciel qui suit votre horloge. La fumée monte quand il fait froid, les fenêtres s’allument une à une le soir, un chat marche sur le faîtage, les pigeons vont et viennent, une guirlande brille sur une terrasse. L’hiver, la neige tient sur les toits.',
+rp1:'Toits de Paris — heure dorée, 32:9 (5120×1440)',rp2:'Matin enneigé, 16:9',rp3:'Nuit, 16:9',rp4:'Soir de neige, 21:9',
+rpf1:'<b>24 novembre</b>Sortie sur itch.io. Pack à 6 $, tous les formats du téléphone au 32:9.',rpf2:'<b>Collection : offert</b>Ajouté à la Collection le jour de la sortie.',rpf3:'<b>De la neige pour décembre</b>La neige sur les toits l’hiver, ou quand vous voulez.',
+rpb:'Essayer l’aperçu dans la démo',rpb2:'Suivre sur itch.io',rpn:'Pas de précommande : la page ouvre le jour de la sortie.',
+hw:'Halloween Edition',hws:'Jungle + Neon City',
+hwl:'Jungle et Neon City version Halloween : une grosse lune orange, des citrouilles allumées le long de la rivière et sur les toits, des chauves-souris, des chats noirs et une brume verte. Vivant, du 32:9 au téléphone, et effrayant toute l’année.',
+hw1:'Jungle Halloween — nuit, 32:9',hw2:'Jungle Halloween — crépuscule, 16:9',hw3:'Neon City Halloween — nuit, 16:9',hwb:'Obtenir l’Halloween Edition, 6 $',
 fm:'Tous les écrans, un seul pack',fml:'Le 16:9, le 21:9 et le 32:9 étaient déjà dans chaque pack. Les nouveaux formats (du 5K2K aux téléphones) sont ajoutés gratuitement à chaque pack et à la Collection, y compris pour ceux qui les ont déjà achetés.',
 fmc:'<li>16:9 <span>jusqu’à 4K</span></li><li>21:9 <span>3440×1440</span></li><li>32:9 <span>5120×1440</span></li><li>5K2K <span>5120×2160</span></li><li>Triple écran <span>7680×1440</span></li><li>16:10 <span>1920×1200 · 2560×1600</span></li><li>Steam Deck <span>1280×800</span></li><li>MacBook Air 15 <span>2880×1864</span></li><li>MacBook Pro 14 <span>3024×1964</span></li><li>iPad Pro <span>2732×2048</span></li><li>iPhone <span>1179×2556 · 1290×2796</span></li><li>Android <span>1440×3120</span></li>',
 fmn:'Des images fixes pour chaque format et des boucles vidéo de 30 secondes. Pour les téléphones : images et vidéos verticales.',
-st:'Stream Pack',sts:'bientôt',
-stl:'Des scènes animées pour OBS, Streamlabs et StreamElements, tirées des fonds d’écran : Starting soon, Be right back, Ending et Just chatting avec cadre webcam. Pour Jungle, Neon City et Night Train.',
-st1:'Jungle — Starting soon',st2:'Neon City — Be right back',st3:'Night Train — Just chatting, cadre webcam',st4:'Jungle — Ending',
+st:'Stream Pack',sts:'disponible',
+stl:'Des scènes animées pour OBS, Streamlabs et StreamElements, tirées des fonds d’écran : Starting soon, Be right back, Ending et Just chatting avec cadre webcam. Pour Jungle et Neon City.',
+st1:'Jungle — Starting soon',st2:'Neon City — Be right back',st3:'Neon City — Just chatting, cadre webcam',st4:'Jungle — Ending',
 stf1:'<b>8 $ par thème</b>6 $ si vous avez déjà le pack de ce thème ou la Collection.',
 stf2:'<b>Contenu</b>4 scènes, boucles 1080p de 60 secondes en MP4 et WebM, avec et sans texte, images PNG, calque cadre webcam.',
 stf3:'<b>Source navigateur vivante</b>Une version HTML pour OBS qui tourne en direct, avec votre titre et votre sous-titre.',
 stf4:'<b>Licence</b>Pour vos propres chaînes, même monétisées, avec un crédit dans votre panneau ou votre description.',
-stb:'Bientôt sur itch.io',
+stb:'Stream Pack Jungle, 8 $',stb2:'Stream Pack Neon City, 8 $',
 p:'Prix',pl:'Un seul paiement, à vous pour toujours. Prix en dollars US, vous pouvez donner plus. Vendu sur itch.io.',
 p1:'Gratuit',p1s:' · prix libre',p1l:'<li>Jungle, HTML interactif 16:9</li><li>Vidéo 1080p et image fixe</li><li>Toutes les fonctions : heure, lune, météo, événements</li>',p1b:'Télécharger',
-p2:'Pack thème',p2s:' · ou plus',p2l:'<li>Tous les formats : 16:9 jusqu’à 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively et app Mac</li><li>Vidéos et images fixes</li><li>Nouveau : 5K2K, triple écran, Steam Deck, MacBook, iPad, téléphones</li><li>Mises à jour du thème offertes</li>',p2b:'Pack Jungle',p2c:'Pack Neon City',
-p3:'Collection',p3s:' · 2 thèmes',p3l:'<li>Jungle + Neon City, tous les formats</li><li>Les thèmes ajoutés à la collection sont offerts aux acheteurs (Night Train le 27 oct.)</li><li>Le prix monte à chaque nouveau thème : acheter tôt coûte moins cher</li>',p3b:'Obtenir la collection',
-pn:'Payez 20 $ ou plus sur un pack pour devenir Supporter : votre nom dans les crédits et 7 jours d’avance sur le thème suivant (Night Train : 20 octobre). Juste envie de dire merci ? <a href="https://ko-fi.com/ambiantpixel">Offrez-nous un café sur Ko-fi</a>.',
+p2:'Pack thème',p2s:' · ou plus',p2l:'<li>Tous les formats : 16:9 jusqu’à 4K, 21:9, 32:9, mobile</li><li>Wallpaper Engine, Lively et app Mac</li><li>Vidéos et images fixes</li><li>Nouveau : 5K2K, triple écran, Steam Deck, MacBook, iPad, téléphones</li><li>Mises à jour du thème offertes</li>',p2b:'Jungle',p2c:'Neon City',p2d:'Campagne française',p2e:'Halloween Edition',
+p3:'Collection',p3s:' · 3 thèmes',p3l:'<li>Jungle + Neon City + Night Train, tous les formats</li><li>Toits de Paris ajouté le 24 novembre, offert aux acheteurs</li><li>Le prix monte à chaque nouveau thème : acheter tôt coûte moins cher</li>',p3b:'Obtenir la collection',
+pn:'Payez 20 $ ou plus sur un pack pour devenir Supporter : votre nom dans les crédits et 7 jours d’avance sur le thème suivant. Juste envie de dire merci ? <a href="https://ko-fi.com/ambiantpixel">Offrez-nous un café sur Ko-fi</a>.',
 s:'Sur-mesure',sl:'Une scène pour votre stream, votre vitrine ou votre bureau ? Une variante d’un thème, vos couleurs, une taille d’écran précise ? Décrivez votre idée, nous vous envoyons un devis.',sb:'Commander sur Ko-fi',sb2:'Nous écrire',sn:'Usage commercial (boutiques, lieux, pub) : licence sur demande par e-mail.',
 q1:'Comment l’installer sous Windows ?',a1:'<p>Avec <b>Lively Wallpaper</b> (gratuit, Microsoft Store) : « Ajouter un fond », puis choisissez le fichier <code>.html</code>. Avec <b>Wallpaper Engine</b> (Steam), le Pack contient un projet Wallpaper Engine prêt à l’emploi (tous formats) : dans Wallpaper Engine, choisissez <i>Ouvrir un fond d’écran → Ouvrir depuis un fichier</i> et importez-le. Une version sur le Workshop arrive bientôt.</p>',
 q2:'Et sur Mac ?',a2:'<p>Le Pack contient une petite app Mac qui place le fond derrière les icônes du bureau. L’app n’est pas notarisée : au premier lancement, ouvrez <i>Réglages Système → Confidentialité et sécurité</i> et cliquez sur « Ouvrir quand même ». Vous pouvez aussi utiliser l’app gratuite Plash avec le fichier <code>.html</code>.</p>',
@@ -457,7 +542,7 @@ ft:'Des fonds d’écran pixel art vivants.'
   nodes.forEach(function(n){var k=n.dataset.i18n,v=l==='fr'?FR[k]:EN[k];if(v!=null)n.innerHTML=v});
   btn.textContent=l==='fr'?'EN':'FR';btn.setAttribute('aria-label',l==='fr'?'Switch to English':'Passer en français');
   document.title=l==='fr'?'Ambiant Pixel — Fonds d’écran pixel art vivants':'Ambiant Pixel — Living pixel art wallpapers';
-  fillEvents();setPause(paused,true);
+  fillEvents();setPause(paused,true);if(saleOn)saleEnd();
   try{localStorage.setItem('ap-lang',l)}catch(e){}
  }
  btn.addEventListener('click',function(){set(lang==='fr'?'en':'fr')});

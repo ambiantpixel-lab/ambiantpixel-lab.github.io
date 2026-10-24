@@ -68,4 +68,6 @@ details p{color:var(--mute);margin:0 0 14px}
 code{font-family:var(--mono);background:var(--bg3);padding:0 4px}
 footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--mute);font-size:.9rem}
 .row{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+.sale{background:#2a1406;border-bottom:2px solid #ff8a1f;color:#ffe2c4}.sale .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;padding-top:10px;padding-bottom:10px}.sale p{margin:0;font-size:.95rem}.sale b{font-family:var(--mono);color:#ffb347}
+.sale .cta.sm{background:#ff8a1f;color:#1a0b00}
 @media (max-width:760px){.nav ul{display:none}.nav .cta.sm{margin-left:auto}.gal,.tri{grid-template-columns:1fr}.links{columns:1}.phones{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}section{padding:36px 0}}

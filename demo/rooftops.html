@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><title>Rooftops of Paris — Ambiant Pixel live demo (preview)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>html,body{margin:0;height:100%;background:#0b0d16;overflow:hidden;cursor:default}
+canvas{position:absolute;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges;image-rendering:pixelated}
+#hud{position:fixed;left:12px;bottom:12px;font:12px/1.5 ui-monospace,monospace;color:#f3ead8;background:#000a;padding:8px 10px;border-radius:6px;display:none;white-space:pre;z-index:2}</style>
+</head><body><canvas id="c"></canvas><div id="hud"></div><script>
+'use strict';
+const ASSETS={"toits":{"b64":"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","frames":null},"fumee_0":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAMAAAAoyzS7AAAAA1BMVEXY3OJHaVAVAAAACklEQVR42mNgAAAAAgAB5Sfe/AAAAABJRU5ErkJggg==","frames":null},"fumee_1":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAMAAABh9kWNAAAACVBMVEUAAADY3OK0usQNCXo+AAAAAXRSTlMAQObYZgAAABFJREFUeNpjYGBkYGBkAhEMAAAwAAenw4+3AAAAAElFTkSuQmCC","frames":null},"fumee_2":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAAYAAAAFCAMAAABRhm3UAAAACVBMVEUAAADY3OK0usQNCXo+AAAAAXRSTlMAQObYZgAAABZJREFUeNpjYGAEAQiJRDExMTIyQLgAAh0AH81j4ZEAAAAASUVORK5CYII=","frames":null},"fumee_3":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAMAAADtRZdSAAAACVBMVEUAAADY3OK0usQNCXo+AAAAAXRSTlMAQObYZgAAACNJREFUeNpNxsEJADAQwzA7+w9dAoGeXgIsWFo1JUtyxt/KAwo0AFXuSYHnAAAAAElFTkSuQmCC","frames":null},"geraniums":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAAkAAAAECAMAAABr0eX8AAAAElBMVEXweqAAAADgSEg9bjhbmkqaTjQEDvojAAAAAnRSTlP/AOW3MEoAAAAbSURBVHjaY2BgZGBiZGJgZGBgZoFCBlYYQLAAB6gAgdIXBAIAAAAASUVORK5CYII=","frames":null},"nuage_0":{"b64":"iVBORw0KGgoAAAANSUhEUgAAADwAAAASCAMAAAAwhE0GAAAADFBMVEUAAADk6vLDzt7+/v7bcEzQAAAAAXRSTlMAQObYZgAAAJNJREFUeNrNk8sOwyAMBNnx//9zRDEPWyFNqhy6B3CEZ2MMlPKvUhWPMQB1PcORmUk+StzxqP/DWTMfNVy4wj8pUBrV1dhvtKegDE8XTlra5lDlBubkOBKc9rzCrLw3Y0ZaOhQqaW03MzKMl7DRtK0wFzBbDxLsV5Ay6PVuRTdfiLvun2OJmBuD0HF+0O33QQhe0gEEtQPAmVWo3wAAAABJRU5ErkJggg==","frames":null},"nuage_1":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAGAAAAAYCAMAAAAyNwimAAAADFBMVEUAAADDzt7k6vL+/v6MzTAyAAAAAXRSTlMAQObYZgAAAPhJREFUeNrtldsOxCAIRMX+/z9vLBcZxBKT9m15aBT1DGjF1v72nhHbd/g+7EUJDJjxIvFBwL1fw1QC597OU77xbgVivihgDpbaOd8UjK8K/G0ht3O+KPTJl03SEeNbvzYFBB44HDFOLVU4uoTnHLNJGIs46eEXQFopgMmaLHkw/AGRf+13aBVwiQ0UN11jm8ByJD0fcwJ6NgMsDUIBYNhfk/Zxh0qBQK6M/Ap3dR4E+hGf0sSGgHb0DCiUNAxyL0C51xUQrF+0UBcGwZjvQbm1a4f10RXRifASrs+VlrIldg9kxoe2e2hamBMXwVs0/Udv6hJCFVNuP5PqCmhjW2pUAAAAAElFTkSuQmCC","frames":null},"nuage_2":{"b64":"iVBORw0KGgoAAAANSUhEUgAAACgAAAANCAMAAADsQdzaAAAADFBMVEUAAADk6vL+/v7Dzt6qHC/jAAAAAXRSTlMAQObYZgAAAFdJREFUeNqd0FEOwCAIA1BL73/nZUWi0SFm/RCi70No7U8QKZ2ZXUg5BWrJEpp3mwTALwjy5cPpTn6F8bRBIAbSmcCxnR7Sy/rHSYqQXqZpWOS01BKkeQCS0QG+Vt0MegAAAABJRU5ErkJggg==","frames":null},"nuage_3":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAIIAAAAaCAMAAABM6HThAAAADFBMVEUAAADk6vLDzt7+/v7bcEzQAAAAAXRSTlMAQObYZgAAAUJJREFUeNrtltuawyAIhDvj+7/zfvEExIm2jdm9WW5KiYFfAujr9S97BUV+KxyLjADPQlgAVtVBAM8zQEqDAJAOaeZnCFwIpxaGZjOGvdk4PnoIEaIdDGbrDDs/CQnEECpaStFq2gaC4ixJsVgnBKfyVvGxEVyJxRJc9xiyk/x6miPMUtMR+FXvnTN6B8Ha9L1+RUjv+whQpWClmZPRR8mSwPxJhKvmGPoh8DiWkcHPekxSKutd9AZOHSEWcGy6zhALHBceIB9HmTrI4VJKFSHb+6T3aR2cSVk8vkTIfxwC+mGz9Pi5DLVwRKtWhYDtBMKlIdC6sCJwPIyxX8rBVuLaJG71yHH1wp2OIRww3nPciGC4/NR1/Yek6ebCq5RGKrUrde99438pk4upm1hrJ/6NapQL4hj87rbs0OUuvHG6zSA/tXQOa4iXPpcAAAAASUVORK5CYII=","frames":null},"nuage_4":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAEwAAAAMCAMAAAD/Eat1AAAADFBMVEUAAADk6vLDzt7+/v7bcEzQAAAAAXRSTlMAQObYZgAAAIZJREFUeNrNkUsOxDAIQ7G5/51HCd8gtZPFLMab4mCeEioyhaUnP5tfBBwDBFQ1vNW4B1neB9RlHl5jR+9YO8/OUvPVrNuTnBD7rOQVrN6uqgdtN95h7nMHXlBihAeMGfU828KRsNSEccB6Ftbl8GniLMD11J6tnHRa+DRx5n+j7Y0/kPy1Pv34Az41Bc6uAAAAAElFTkSuQmCC","frames":null},"chat":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAIAAAAASCAMAAACkTiaxAAAACVBMVEUAAAAqJDPweqBFSVBfAAAAAXRSTlMAQObYZgAAAGpJREFUeNrtldEKwCAIRT39/0ePwYipA5G13Zd8CI5d5UZhZmcwF9PwABio2LhCxTOBiLeBbYCQ+JtbBRS83AAvuW2Aj1lu4IndaETBjYKoX3OAe0MvIOyHS8xc9KsMpFeyfLB4Q1kh+I8P9S0FGYEWSKUAAAAASUVORK5CYII=","frames":[[0,16,18,200],[16,16,18,200],[32,16,18,200],[48,16,18,200],[64,16,18,200],[80,16,18,200],[96,16,18,200],[112,16,18,200]]},"chat_marche":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAHgAAAAMCAMAAACeCYk3AAAACVBMVEUAAAAqJDPw0ECxq+ZEAAAAAXRSTlMAQObYZgAAAGxJREFUeNrFlFEKwCAMQ5Pd/9BSdMPWMBRK7Y/kEUkrKuCLJFDCuEAKI9N9IZlic2fpPuc09JhTsHTfaGGuIrbSKoZbDLeY3QdOSx37lGDReBDiH+t28CsEE82oEMeGCD/Hz3SbpyCC/SwxuAHwLwJVG2dqHAAAAABJRU5ErkJggg==","frames":[[0,20,12,125],[20,20,12,125],[40,20,12,125],[60,20,12,125],[80,20,12,125],[100,20,12,125]]},"linge":{"b64":"iVBORw0KGgoAAAANSUhEUgAAAaQAAAAYCAMAAACC7Xm9AAAAFVBMVEUAAAA6Okp6Tir09PDowEBKeMjweqBz5mgbAAAAAXRSTlMAQObYZgAAAUJJREFUeNrtltsSgyAMRBeV/v8nd6RaqQJJEOltz5sdeibZxU4BQgj5D5xzLRy0XGhZXacGAS1XWwJDeBxMhvk7w+ETWq6xjDFOVfA0uWkhreloeTo2TcVGmwaLZhzxLstxo10uc4PJ4oflV3YuOAxRirejBUJJuo02TTrerhaxJPgV531QhrfVvRwS421j8REuZ5FK8h6xJGcR4m1jQe1G2ZLgPW6B/SkhXsTTnLHEKyFnsZSEvKUcL9pYULtRfGR+0MS7TYMrLbqVBIs23h6WExuxpMdflNLlbWNpVhKiWcTXGmLXHSzShVFayvH2tYglpT3WeJG6d4pZFCXJubSJVxOLvFPBYrq9X1GS5fJqXkdrSZl0WRJLOlVSCntJokVXkl5SLEm9j0lTVZLRY6CwVK3lcySNLNUaQgghhBDyG9wB1EkrU7yYLc4AAAAASUVORK5CYII=","frames":[[0,70,24,200],[70,70,24,200],[140,70,24,200],[210,70,24,200],[280,70,24,200],[350,70,24,200]]},"pigeon":{"b64":"iVBORw0KGgoAAAANSUhEUgAAADAAAAAHCAMAAAB5oz6gAAAAD1BMVEUAAACKipYjHDPPdVA9bjhwqJR8AAAAAXRSTlMAQObYZgAAADlJREFUeNqdzNEKACAIQ9HN9f/fHERFWkm0lwNeEPgazZt2tsk77rde6GVw6bAeXj1/TAQoalfB2SuCkwEHpAs4vgAAAABJRU5ErkJggg==","frames":[[0,8,7,250],[8,8,7,250],[16,8,7,250],[24,8,7,250],[32,8,7,250],[40,8,7,250]]},"pigeon_vol":{"b64":"iVBORw0KGgoAAAANSUhEUgAAACgAAAAHCAMAAABN2v+8AAAACVBMVEUAAACKipbPdVD85cUPAAAAAXRSTlMAQObYZgAAACpJREFUeNpjYGBkAAFGKIaR2ACqGtzqSFAIAoRZjDDAhJ9FvIk4XINBAAAuKwBpuz6uPQAAAABJRU5ErkJggg==","frames":[[0,10,7,83],[10,10,7,83],[20,10,7,83],[30,10,7,83]]}};
+const PALETTE={"0":"#9db0ca","1":"#5d8fd0","2":"#77a6dc","3":"#93bce6","4":"#b0d0ee","5":"#cde2f2","6":"#e4eef5","7":"#9fb3cc","8":"#aebfd4","9":"#8aa0bd","k":"#231c33","a":"#5e8fd1","v":"#7a8fae","j":"#d9c9a8","J":"#b6a587","l":"#7f8fa6","L":"#66748a","h":"#c4a988","H":"#c06a48","V":"#4e5c78","c":"#efe0c0","d":"#cbb795","e":"#fbf3de","E":"#a89676","z":"#8a9bb3","Z":"#6e7d95","x":"#a9b8cc","X":"#5a6880","b":"#d8bd98","B":"#b39a78","n":"#e8d6b6","t":"#cf7550","T":"#9a4e34","w":"#55657f","W":"#f6f1e6","i":"#3a3a4a","g":"#5b9a4a","G":"#3d6e38","f":"#f07aa0","r":"#e04848","o":"#a8713e","O":"#7a4e2a","Y":"#ffd28a","y":"#f0d040","K":"#2a2433","m":"#fefefe","M":"#e4eaf2","u":"#c3cede","p":"#d8dce2","P":"#b4bac4","s":"#f4f4f0","q":"#4a78c8","Q":"#e8c040","A":"#8a8a96","R":"#7fa0c8","F":"#ffe08a","C":"#e6d3b0","I":"#c2ac88","D":"#f0ece4","U":"#ccc6bc","N":"#d8b88a","S":"#b29266","+":"#4c5468","-":"#3c4252","=":"#646d84","<":"#b8614a",">":"#8e4634","^":"#d07a5c","/":"#c9b8a0","|":"#a6957d","~":"#8d9cb4","@":"#76849c"};
+// ============================================================================
+// TOITS DE PARIS — moteur : cycle jour/nuit par PALETTE (chaque clé pxl est
+// recolorée selon l'heure), fenêtres, fumées, nuages, chats, pigeons, météo.
+// ============================================================================
+const W = 1024, H = 288, N = W * H
+const Q = new URLSearchParams(location.search);/*AP-16x9-LOCK*/for(const k of ['w','h','nw'])Q.delete(k);Q.set('w','512');Q.set('h','288');Q.set('nw','512');{const f0=Q.get('fit'),af=()=>{if(innerWidth>innerHeight*16/9+1)Q.set('fit','contain');else if(f0===null)Q.delete('fit');else Q.set('fit',f0)};af();addEventListener('resize',af)}
+const FREEZE = Q.get('freeze') === '1'
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296 } }
+if (FREEZE) Math.random = mulberry32(+(Q.get('seed') || 32))
+const rnd = (a, b) => b === undefined ? Math.random() * (a === undefined ? 1 : a) : a + Math.random() * (b - a)
+const rint = (a, b) => Math.floor(rnd(a, b + 1))
+const pick = (a) => a[Math.floor(Math.random() * a.length)]
+const clamp = (v, a, b) => v < a ? a : v > b ? b : v
+const lerp = (a, b, t) => a + (b - a) * t
+const sstep = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t) }
+const hash = (x, y = 0, z = 0) => { let h = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul(z | 0, 1442695041) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296 }
+const BAY = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5].map(v => (v + 0.5) / 16)
+const bay = (x, y) => BAY[((y & 3) << 2) | (x & 3)]
+const hex = (h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]
+const mix = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)]
+const pack = (r, g, b) => (0xff000000 | (clamp(b | 0, 0, 255) << 16) | (clamp(g | 0, 0, 255) << 8) | clamp(r | 0, 0, 255)) >>> 0
+const gray = (c, k) => { const l = c[0] * 0.3 + c[1] * 0.55 + c[2] * 0.15; return mix(c, [l, l, l * 1.03], k) }
+
+// --- temps & soleil ---------------------------------------------------------------
+let SPEED = +(Q.get('speed') || 1), hourOffset = 0
+let simMs = FREEZE ? (Q.has('now') ? +new Date(Q.get('now')) : +new Date(2026, 9, 16, 15, 0)) : Date.now()
+if (Q.has('hour')) { const d = new Date(simMs), h = +Q.get('hour'); d.setHours(Math.floor(h), Math.round(h % 1 * 60), 0, 0); simMs = +d }
+const syncClock = () => { if (!FREEZE && SPEED === 1) simMs = Date.now() + hourOffset * 3600e3 }
+if (!FREEZE && Q.has('hour')) hourOffset = (simMs - Date.now()) / 3600e3
+const PARIS = Q.get('paris') === '1'
+const LAT = (PARIS ? 48.86 : +(Q.get('lat') || 14.6)) * Math.PI / 180
+const PFMT = PARIS ? new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Paris', hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null
+function clock(ms) {
+  if (!PARIS) { const d = new Date(ms); return { y: d.getFullYear(), mo: d.getMonth(), da: d.getDate(), h: d.getHours() + d.getMinutes() / 60 + d.getSeconds() / 3600, mi: d.getMinutes() } }
+  const o = {}; for (const p of PFMT.formatToParts(new Date(ms))) o[p.type] = +p.value
+  return { y: o.year, mo: o.month - 1, da: o.day, h: (o.hour % 24) + o.minute / 60, mi: o.minute, off: ((o.hour % 24) - new Date(ms).getUTCHours() + 24) % 24 }
+}
+function sun(c) {
+  const doy = Math.floor((new Date(c.y, c.mo, c.da) - new Date(c.y, 0, 0)) / 864e5)
+  const dec = -23.44 * Math.PI / 180 * Math.cos(2 * Math.PI * (doy + 10) / 365)
+  const noon = Q.has('noon') ? +Q.get('noon') : PARIS ? 12 + c.off - 0.15 : 12.1
+  const ha = (c.h - noon) * 15 * Math.PI / 180
+  const el = Math.asin(Math.sin(LAT) * Math.sin(dec) + Math.cos(LAT) * Math.cos(dec) * Math.cos(ha)) * 180 / Math.PI
+  return { el, ha }
+}
+const moonPhase = (ms) => { let p = (((ms - Date.UTC(2000, 0, 6, 18, 14)) / 864e5) % 29.530588) / 29.530588; return p < 0 ? p + 1 : p }
+
+// --- classes de clés de palette ---------------------------------------------------------
+// f = façade (face avant), s = côté (ouest), t = dessus/pente, k = encre, w = vitre, e = émissive
+const KC = {
+  k: 'ink', K: 'ink',
+  '1': 'sky0', '2': 'sky1', '3': 'sky2', '4': 'sky3', '5': 'sky4', '6': 'sky5', a: 'star',
+  '7': 'far0', '8': 'far0l', '9': 'far1', '0': 'far1l', v: 'farwin',
+  '/': 'f', '|': 's', '~': 't', '@': 's', j: 'f', J: 's', l: 't', L: 's', h: 'f', H: 'f', V: 'win',
+  c: 'f', C: 'f', D: 'f', N: 'f', d: 's', I: 's', U: 's', S: 's', e: 'f', E: 's',
+  z: 't', '+': 't', '<': 't', Z: 's', '-': 's', '>': 's', x: 'top', '=': 'top', '^': 'top', X: 's',
+  b: 'f', B: 's', n: 'top', t: 'f', T: 's', W: 'f', i: 'ink2', w: 'win',
+  g: 'f', G: 's', f: 'f', r: 'f', o: 'top', O: 's', s: 'f', q: 'f', Q: 'f', A: 'f', R: 'win',
+  Y: 'emit', y: 'eyes', F: 'bulb', m: 'cl2', M: 'cl1', u: 'cl0', p: 'smoke', P: 'smoke2',
+}
+// profondeur (brume) : rangs lointains -> 1
+const DEPTH = { '7': 0.88, '8': 0.88, v: 0.8, '9': 0.72, '0': 0.72, '/': 0.5, '|': 0.5, '~': 0.5, '@': 0.5, j: 0.28, J: 0.28, l: 0.28, L: 0.28, h: 0.28, H: 0.3, V: 0.28 }
+let KEYS = [], ALB = [], CLS = [], DEP = [], IDX = null      // index par pixel (clé)
+const keyOfColor = new Map()
+function buildIndex() {
+  KEYS = Object.keys(PALETTE)
+  KEYS.forEach((k, i) => { const c = hex(PALETTE[k]); ALB[i] = c; CLS[i] = KC[k] || 'f'; DEP[i] = DEPTH[k] || 0; keyOfColor.set((c[0] << 16) | (c[1] << 8) | c[2], i) })
+}
+const idxOf = (v) => { const k = keyOfColor.get(((v & 255) << 16) | (((v >>> 8) & 255) << 8) | ((v >>> 16) & 255)); return k === undefined ? -1 : k }
+
+// --- assets -------------------------------------------------------------------------------
+const SPR = {}
+async function decodeAll() {
+  const cv = document.createElement('canvas'), cx = cv.getContext('2d', { willReadFrequently: true })
+  const list = await Promise.all(Object.entries(ASSETS).map(async ([n, a]) => { const im = new Image(); im.src = 'data:image/png;base64,' + a.b64; await im.decode(); return [n, a, im] }))
+  for (const [n, a, im] of list) {
+    cv.width = im.width; cv.height = im.height; cx.clearRect(0, 0, im.width, im.height); cx.drawImage(im, 0, 0)
+    const all = new Uint32Array(cx.getImageData(0, 0, im.width, im.height).data.buffer)
+    const fr = a.frames || [[0, im.width, im.height, 0]]
+    const s = { w: fr[0][1], h: fr[0][2], frames: [], dur: [], total: 0 }
+    for (const [fx, fw, fh, d] of fr) {
+      const ix = new Int16Array(fw * fh).fill(-1)
+      for (let y = 0; y < fh; y++) for (let x = 0; x < fw; x++) { const v = all[y * im.width + fx + x]; if ((v >>> 24) > 128) ix[y * fw + x] = idxOf(v) }
+      s.frames.push(ix); s.dur.push(d || 100); s.total += d || 100
+    }
+    SPR[n] = s
+  }
+  IDX = SPR.toits.frames[0]
+}
+const frameOf = (s, ms) => { if (s.frames.length === 1) return s.frames[0]; let t = ((ms % s.total) + s.total) % s.total; for (let i = 0; i < s.dur.length; i++) { if (t < s.dur[i]) return s.frames[i]; t -= s.dur[i] } return s.frames[0] }
+
+// --- état du ciel ---------------------------------------------------------------------------
+const env = { h: 12, el: 30, ha: 0, dark: 0, rain: 0, snow: 0, cloud: 0.3, moon: 0, forceRain: null }
+const SKYK = [
+  [-18, '#070814', '#1a1a34'], [-11, '#0b0e28', '#2a2546'], [-7, '#141b4a', '#4a3a6c'], [-4, '#28336e', '#8a5276'],
+  [-1, '#3e4e90', '#e07e66'], [2, '#5974b2', '#f4a466'], [6, '#6c94cc', '#f6cc8e'], [14, '#5e9ad6', '#c8deec'], [35, '#4a88d0', '#acd0ea'],
+].map(([e, z, h]) => [e, hex(z), hex(h)])
+const kf = (e, i) => { if (e <= SKYK[0][0]) return SKYK[0][i]; for (let k = 1; k < SKYK.length; k++) if (e <= SKYK[k][0]) return mix(SKYK[k - 1][i], SKYK[k][i], sstep(SKYK[k - 1][0], SKYK[k][0], e)); return SKYK[SKYK.length - 1][i] }
+function rainAt(ms) {
+  const m = new Date(ms).getMonth(), pB = [0.2, 0.18, 0.16, 0.16, 0.15, 0.12, 0.1, 0.1, 0.13, 0.17, 0.2, 0.2][m]
+  const B = 5400e3, b = Math.floor(ms / B), t = (ms - b * B) / B
+  return (hash(b, 4242) < pB ? 0.35 + hash(b, 4343) * 0.65 : 0) * sstep(0, 0.12, t) * (1 - sstep(0.85, 1, t))
+}
+const G = {}
+function updateEnv() {
+  const c = clock(simMs), s = sun(c)
+  env.h = c.h; env.mi = c.mi; env.mo = c.mo; env.el = s.el; env.ha = s.ha
+  env.dark = 1 - sstep(-7, 3, s.el)
+  env.lamps = 1 - sstep(-3, 5, s.el)
+  let r = env.forceRain !== null ? env.forceRain : rainAt(simMs); if (Q.has('rain')) r = +Q.get('rain')
+  const winter = c.mo === 11 || c.mo <= 1
+  env.snow = (winter && hash(Math.floor(simMs / 5400e3), 99) < 0.4 ? r : 0) + (Q.has('snow') ? +Q.get('snow') : 0)
+  env.rain = env.snow ? 0 : r
+  env.cloud = clamp(0.15 + hash(Math.floor(simMs / 864e5), 17) * 0.5 + Math.max(r, rainAt(simMs + 2e6), rainAt(simMs - 2e6)) * 0.6, 0, 1)
+  env.moon = moonPhase(simMs)
+  const oc = clamp(env.rain * 0.85 + env.snow * 0.7 + Math.max(0, env.cloud - 0.55) * 0.6, 0, 0.92)
+  env.oc = oc
+  let zen = kf(s.el, 1), hor = kf(s.el, 2)
+  zen = gray(zen, oc); hor = gray(hor, oc * 0.85)
+  G.zen = zen; G.hor = hor
+  const day = sstep(-6, 12, s.el), dusk = sstep(-4, 1, s.el) * (1 - sstep(4, 15, s.el))
+  G.amb = mix(mix([0.2, 0.22, 0.42], [0.66, 0.7, 0.82], day), [0.62, 0.48, 0.62], dusk * 0.5)
+  G.amb = mix(G.amb, gray(G.amb, 1).map(v => v * 1.05), oc * 0.7)
+  G.sun = mix([1.0, 0.92, 0.78], [1.3, 0.66, 0.36], sstep(18, 1, s.el)).map(v => v * sstep(-1.5, 3, s.el) * (1 - oc * 0.9))
+  G.sx = Math.sin(s.ha)                              // <0 matin (soleil à gauche), >0 soir (à droite)
+  G.day = day
+}
+
+// --- palette du moment ---------------------------------------------------------------------
+let PAL = []                                           // [r,g,b] par clé
+function buildPalette() {
+  const A = G.amb, S = G.sun, sx = G.sx, elf = clamp(env.el / 45, 0, 1)
+  const hz = mix(G.hor, G.zen, 0.2)
+  const hazeK = lerp(0.62, 0.38, env.dark) + env.oc * 0.15
+  const cloudCols = cloudTones()
+  for (let i = 0; i < KEYS.length; i++) {
+    const a = ALB[i], cl = CLS[i]
+    let L, out
+    switch (cl) {
+      case 'sky0': case 'sky1': case 'sky2': case 'sky3': case 'sky4': case 'sky5': { const t = +cl[3] / 5; out = mix(G.zen, G.hor, Math.pow(t, 0.9)); break }
+      case 'star': out = G.zen; break
+      case 'cl0': out = cloudCols[0]; break
+      case 'cl1': out = cloudCols[1]; break
+      case 'cl2': out = cloudCols[2]; break
+      case 'smoke': out = [232, 234, 240].map((v, k) => v * Math.min(1.05, A[k] * 1.25 + S[k] * 0.25)); break
+      case 'smoke2': out = [196, 200, 210].map((v, k) => v * Math.min(1, A[k] * 1.2 + S[k] * 0.2)); break
+      case 'ink': L = A.map(v => v * 0.55 + 0.08); break
+      case 'ink2': L = A.map((v, k) => v * 0.7 + S[k] * 0.15); break
+      case 'f': L = A.map((v, k) => v * 0.98 + S[k] * (0.32 + 0.3 * Math.max(0, -sx) + 0.15 * elf)); break
+      case 's': L = A.map((v, k) => v * 0.74 + S[k] * Math.max(0, sx) * 1.05); break
+      case 't': L = A.map((v, k) => v * 1.06 + S[k] * (0.25 + 0.35 * elf)); break
+      case 'top': L = A.map((v, k) => v * 1.18 + S[k] * (0.35 + 0.45 * elf)); break
+      case 'far0': case 'far0l': case 'far1': case 'far1l': L = A.map((v, k) => v * 1.0 + S[k] * (cl.endsWith('l') ? 0.5 : 0.25)); break
+      case 'win': case 'farwin': L = A.map((v, k) => v * 0.9 + S[k] * 0.15); break
+      case 'emit': case 'bulb': case 'eyes': L = A.map((v, k) => v + S[k] * 0.3); break
+      default: L = A
+    }
+    if (!out) out = [a[0] * L[0], a[1] * L[1], a[2] * L[2]]
+    // vitres : reflet du ciel le jour
+    if (cl === 'win' || cl === 'farwin') out = mix(out, G.zen.map(v => v * 0.85), 0.35 * (1 - env.dark * 0.7))
+    // neige : dessus et pentes blanchissent
+    if (env.snow > 0.05 && (cl === 't' || cl === 'top' || cl === 'far0l' || cl === 'far1l')) out = mix(out, [236, 240, 248].map((v, k) => v * (A[k] * 0.9 + 0.15)), clamp(env.snow * 1.2, 0, 0.85))
+    // pluie : toits mouillés plus sombres et luisants
+    if (env.rain > 0.05 && (cl === 't' || cl === 'top')) out = mix(out, G.hor.map(v => v * 0.75), env.rain * 0.25)
+    // brume de profondeur
+    const d = DEP[i]
+    if (d > 0 && cl !== 'win') out = mix(out, hz, d * hazeK)
+    if (cl === 'farwin' || (cl === 'win' && d > 0)) out = mix(out, hz, d * hazeK * 0.6)
+    PAL[i] = out
+  }
+}
+function cloudTones() {
+  const e = env.el, ss = sstep(-3, 2, e) * (1 - sstep(4, 12, e)), n = env.dark
+  let lit = mix([255, 252, 248], [255, 184, 134], ss), mid = mix([232, 236, 244], [230, 150, 146], ss), sh = mix([188, 198, 214], [150, 110, 142], ss)
+  lit = mix(lit, [70, 70, 100], n); mid = mix(mid, [52, 52, 80], n); sh = mix(sh, [40, 40, 64], n)
+  const g = (c) => mix(c, gray(c, 1).map(v => v * 0.8), env.oc)
+  return [g(sh), g(mid), g(lit)]
+}
+
+// --- fenêtres (composantes connexes des clés vitre) ----------------------------------------------
+const WINS = [], WINID = new Int32Array(N).fill(-1), FARWIN = []
+function findWindows() {
+  const iw = KEYS.indexOf('w'), iV = KEYS.indexOf('V'), iv = KEYS.indexOf('v')
+  for (let i = 0; i < N; i++) {
+    const k = IDX[i]
+    if (k === iv) { FARWIN.push(i); continue }
+    if ((k !== iw && k !== iV) || WINID[i] >= 0) continue
+    const o = { n: WINS.length, px: [], k }
+    const st = [i]; WINID[i] = o.n
+    while (st.length) { const j = st.pop(); o.px.push(j); for (const q of [j - 1, j + 1, j - W, j + W]) if (q >= 0 && q < N && WINID[q] < 0 && IDX[q] === k && Math.abs((q % W) - (j % W)) <= 1) { WINID[q] = o.n; st.push(q) } }
+    o.seed = hash(i, 91); o.tint = o.seed < 0.55 ? [255, 196, 110] : o.seed < 0.8 ? [255, 222, 156] : o.seed < 0.92 ? [210, 224, 255] : [150, 176, 255]
+    o.tv = o.seed > 0.92; o.owl = hash(i, 5) < 0.2; o.early = hash(i, 6) < 0.22; o.per = 8 + hash(i, 7) * 30
+    o.cx = o.px.reduce((s, j) => s + j % W, 0) / o.px.length; o.cy = o.px.reduce((s, j) => s + ((j / W) | 0), 0) / o.px.length
+    WINS.push(o)
+  }
+}
+function winProb(h, o) {
+  let p = h >= 17 && h < 23 ? 0.6 : (h >= 23 || h < 1) ? 0.3 : h >= 1 && h < 5.5 ? 0.05 : h >= 5.5 && h < 8.5 ? 0.35 : 0.15
+  if (o && o.owl && (h >= 23 || h < 3)) p += 0.4
+  if (o && o.early && h >= 5 && h < 8) p += 0.35
+  return p * (sstep(0.2, 0.65, env.dark) + env.oc * 0.25)
+}
+
+// --- image de base (recalculée quand la palette change) ------------------------------------------
+const BASE = new Uint32Array(N), SKYMASK = new Uint8Array(N)
+let BULBS = []
+function buildBase() {
+  buildPalette()
+  const P32 = PAL.map(c => pack(c[0], c[1], c[2]))
+  const minutes = simMs / 60000
+  for (const o of WINS) { const slot = Math.floor(minutes / o.per + o.seed * 10); o.on = hash(o.n, slot, 3) < winProb(env.h, o); o.b = 0.8 + hash(o.n, slot, 4) * 0.2 }
+  const ib = KEYS.indexOf('F'), iY = KEYS.indexOf('Y')
+  const bulbOn = env.lamps * (env.h >= 17 || env.h < 1.5 ? 1 : 0) || (env.oc > 0.7 && env.dark > 0.3 ? 1 : 0)
+  for (let i = 0; i < N; i++) {
+    const k = IDX[i]; if (k < 0) { BASE[i] = 0xff000000; continue }
+    let v = P32[k]
+    const cl = CLS[k]
+    if (cl === 'win') {
+      const o = WINS[WINID[i]]
+      if (o && o.on) { const y = (i / W) | 0, f = 1 - clamp((y - o.cy + 4) / 12, 0, 0.3); const t = DEP[k] ? 0.75 : 1; v = pack(o.tint[0] * o.b * f * t, o.tint[1] * o.b * f * t, o.tint[2] * o.b * f * t) }
+    } else if (cl === 'bulb' && bulbOn) v = pack(255, 224, 140)
+    else if (cl === 'emit' && env.dark > 0.3) v = pack(255, 206, 130)
+    BASE[i] = v
+    SKYMASK[i] = cl.startsWith('sky') || cl === 'star' ? 1 : 0
+  }
+  // fenêtres lointaines : points allumés au hasard
+  const pf = winProb(env.h, null) * 1.1
+  for (const i of FARWIN) if (hash(i, Math.floor(minutes / 25), 7) < pf) { const w = hash(i, 3) < 0.8 ? [236, 190, 120] : [190, 205, 240]; const d = 0.65; BASE[i] = pack(lerp(w[0], G.hor[0], d * 0.35), lerp(w[1], G.hor[1], d * 0.35), lerp(w[2], G.hor[2], d * 0.35)) }
+  // halos des fenêtres allumées (tramés)
+  if (env.dark > 0.3) for (const o of WINS) if (o.on && !DEP[o.k]) {
+    const r = 5, cx = Math.round(o.cx), cy = Math.round(o.cy)
+    for (let y = cy - r - 3; y <= cy + r + 3; y++) for (let x = cx - r - 1; x <= cx + r + 1; x++) {
+      if (x < 0 || y < 0 || x >= W || y >= H) continue
+      const i = y * W + x; if (WINID[i] === o.n) continue
+      const d = Math.hypot((x - cx) / (r + 1), (y - cy) / (r + 3))
+      if (d < 1 && (1 - d) * 0.55 > bay(x, y)) { const v = BASE[i], g = 26 * env.dark; BASE[i] = pack((v & 255) + g * 1.0, ((v >>> 8) & 255) + g * 0.7, ((v >>> 16) & 255) + g * 0.35) }
+    }
+  }
+  // halo de la guirlande
+  if (bulbOn) for (const i of BULBS) { const bx = i % W, by = (i / W) | 0; for (let y = by - 4; y <= by + 4; y++) for (let x = bx - 4; x <= bx + 4; x++) { if (x < 0 || y < 0 || x >= W || y >= H) continue; const d = Math.hypot(x - bx, y - by) / 5; if (d < 1 && (1 - d) * 0.6 > bay(x, y)) { const j = y * W + x; if (IDX[j] === ib) continue; const v = BASE[j], g = 22; BASE[j] = pack((v & 255) + g, ((v >>> 8) & 255) + g * 0.8, ((v >>> 16) & 255) + g * 0.4) } } }
+}
+
+// ============================================================================
+// SIM + RENDU + BOUCLE
+// ============================================================================
+const OUT = new Uint32Array(N)
+const cv = document.getElementById('c'), ctx = cv.getContext('2d')
+// --- AP multi-formats (2026-10-24) : monde 1024x288 inchangé, fenêtre VW x 288 affichée ------------
+const CX0 = 600
+let VW = 0, X0 = 0, IMG = null, IMG32 = null
+function viewFor(tw, th) {
+  let s = Math.ceil(th / H - 1e-9); if (H * s > th / 0.875) s = th / H
+  return { s, vw: Math.min(W, Math.ceil(tw / s - 1e-9)) }
+}
+function setView() {
+  const tw = +Q.get('w') || innerWidth, th = +Q.get('h') || innerHeight
+  const vw = +Q.get('nw') ? clamp(Math.round(+Q.get('nw')), 16, W) : Q.get('fit') === 'contain' ? W : viewFor(tw, th).vw
+  const re = vw !== VW
+  if (re) { VW = vw; cv.width = VW; cv.height = H; IMG = ctx.createImageData(VW, H); IMG32 = new Uint32Array(IMG.data.buffer) }
+  X0 = VW >= W ? 0 : Math.round(Q.has('vx') ? clamp(+Q.get('vx'), 0, 1) * (W - VW) : clamp(CX0 - VW / 2, 0, W - VW))
+  document.documentElement.dataset.view = VW + 'x' + H
+  return re
+}
+setView()
+function layout() {
+  const re = setView(), dw = innerWidth, dh = innerHeight
+  let s = Math.max(dw / VW, dh / H)
+  if (Q.get('fit') === 'contain') s = Math.min(dw / VW, dh / H)
+  else { const si = Math.ceil(dh / H - 1e-9); if (VW * si >= dw - 4 && H * si <= dh / 0.875) s = si }
+  cv.style.width = VW * s + 'px'; cv.style.height = H * s + 'px'
+  cv.style.left = Math.round((dw - VW * s) / 2) + 'px'; cv.style.top = Math.round(Q.get('fit') === 'contain' ? (dh - H * s) / 2 : dh - H * s) + 'px'
+  if (re && P32.length) try { draw() } catch (e) { }
+}
+addEventListener('resize', layout)
+
+// --- sprites recolorés par la palette courante ------------------------------------------------
+let P32 = []
+function blit(s, fr, X, Y, flip, opt = {}) {
+  X = Math.round(X); Y = Math.round(Y)
+  for (let y = 0; y < s.h; y++) { const oy = Y + y; if (oy < 0 || oy >= H) continue
+    for (let x = 0; x < s.w; x++) { const ox = X + x; if (ox < 0 || ox >= W) continue
+      const k = fr[y * s.w + (flip ? s.w - 1 - x : x)]; if (k < 0) continue
+      const i = oy * W + ox
+      if (opt.sky && !SKYMASK[i]) continue
+      if (opt.alpha !== undefined) { if (opt.alpha < bay(ox, oy)) continue }
+      let v = P32[k]
+      if (CLS[k] === 'eyes' && env.dark > 0.4) v = pack(255, 230, 90)
+      OUT[i] = v
+    }
+  }
+}
+const bl = (n, ms, x, y, flip, opt) => { const s = SPR[n]; blit(s, frameOf(s, ms), x, y, flip, opt) }
+const setPx = (x, y, r, g, b, onlySky) => { x |= 0; y |= 0; if (x < 0 || y < 0 || x >= W || y >= H) return; const i = y * W + x; if (onlySky && !SKYMASK[i]) return; OUT[i] = pack(r, g, b) }
+const addPx = (x, y, r, g, b, onlySky) => { x |= 0; y |= 0; if (x < 0 || y < 0 || x >= W || y >= H) return; const i = y * W + x; if (onlySky && !SKYMASK[i]) return; const v = OUT[i]; OUT[i] = pack((v & 255) + r, ((v >>> 8) & 255) + g, ((v >>> 16) & 255) + b) }
+
+// --- entités -------------------------------------------------------------------------------------
+const clouds = [], birds = [], smoke = [], drops = [], pigeons = [], planes = [], meteors = []
+let SMOKE_SRC = [], STARS = [], cats = { sit: null, walk: null }, wind = 3
+function setupLife() {
+  // sources de fumée : sommets des mitrons (clés t / H) qui donnent sur le vide
+  const it = KEYS.indexOf('t'), iH = KEYS.indexOf('H'), cand = []
+  for (let i = W; i < N; i++) { const k = IDX[i]; if ((k === it || k === iH) && IDX[i - W] !== it && IDX[i - W] !== iH && IDX[i - W] !== KEYS.indexOf('T')) cand.push(i) }
+  const seen = new Set()
+  for (const i of cand.sort((a, b) => hash(a, 1) - hash(b, 1))) { const key = Math.floor((i % W) / 40) + ':' + Math.floor(i / W / 30); if (seen.has(key)) continue; seen.add(key); SMOKE_SRC.push({ x: i % W, y: (i / W) | 0, near: IDX[i] === it, rate: rnd(0.4, 1) }) }
+  const ia = KEYS.indexOf('a'); for (let i = 0; i < N; i++) if (IDX[i] === ia) STARS.push({ i, ph: rnd(6), sp: rnd(1, 3) })
+  const ib = KEYS.indexOf('F'); for (let i = 0; i < N; i++) if (IDX[i] === ib) BULBS.push(i)
+  wind = 2 + hash(Math.floor(simMs / 864e5), 3) * 6
+}
+function spawnCloud(atX) {
+  const n = rint(0, 4), s = SPR['nuage_' + n], y = 4 + Math.pow(rnd(), 1.6) * 80
+  clouds.push({ n: 'nuage_' + n, x: atX ?? -s.w - 4, y, v: (1.2 + rnd(2)) * (1 - y / 200) })
+}
+let birdT = 10, catT = 30, pigT = 5, planeT = 40
+function simStep(dt) {
+  const target = Math.round(2 + env.cloud * 12)
+  if (clouds.length < target && Math.random() < dt * 0.05) spawnCloud()
+  for (let i = clouds.length - 1; i >= 0; i--) { const c = clouds[i]; c.x += c.v * dt * (1 + env.rain * 1.5) * (wind / 4); if (c.x > W + 10) clouds.splice(i, 1) }
+  // fumées
+  const cold = [1, 1, 0.8, 0.5, 0.3, 0.15, 0.1, 0.1, 0.2, 0.5, 0.8, 1][env.mo] * (env.h < 9 || env.h > 17 ? 1.3 : 0.8)
+  for (const s of SMOKE_SRC) if (Math.random() < dt * s.rate * cold * (s.near ? 2.2 : 0.8)) smoke.push({ x: s.x + rnd(-1, 1), y: s.y - 1, age: 0, life: rnd(4, 8) * (s.near ? 1 : 0.7), vy: -rnd(4, 7), near: s.near, ph: rnd(6) })
+  for (let i = smoke.length - 1; i >= 0; i--) { const p = smoke[i]; p.age += dt; p.ph += dt; p.y += p.vy * dt * (1 - p.age / p.life * 0.6); p.x += (wind * (0.4 + p.age * 0.25) + Math.sin(p.ph) * 0.8) * dt; if (p.age > p.life) smoke.splice(i, 1) }
+  if (smoke.length > 600) smoke.splice(0, smoke.length - 600)
+  // oiseaux
+  birdT -= dt
+  if (birdT <= 0) { birdT = rnd(20, 60); if (env.dark < 0.5 && env.rain < 0.3) { const n = rint(4, 9), y0 = rnd(20, 80), dir = Math.random() < 0.5 ? 1 : -1, v = rnd(22, 34); for (let k = 0; k < n; k++) birds.push({ x: (dir > 0 ? -10 : W + 10) - dir * (k * 6 + rnd(3)), y: y0 + Math.abs(k - n / 2) * 2.5, dir, v, ph: rnd(6) }) } }
+  for (let i = birds.length - 1; i >= 0; i--) { const b = birds[i]; b.x += b.dir * b.v * dt; b.ph += dt * 9; if (b.x < -20 || b.x > W + 20) birds.splice(i, 1) }
+  // chat qui traverse un faîtage
+  catT -= dt
+  if (catT <= 0 && !cats.walk) { catT = rnd(60, 160); if (env.rain < 0.2) { const dir = Math.random() < 0.5 ? 1 : -1; cats.walk = { x: dir > 0 ? 330 : 640, dir, t: 0, y: CAT_RIDGE } } }
+  if (cats.walk) { const c = cats.walk; c.t += dt * 1000; c.x += c.dir * 14 * dt; if (c.x < 320 || c.x > 650) cats.walk = null }
+  // pigeons
+  pigT -= dt
+  if (pigT <= 0 && pigeons.length < 5 && env.dark < 0.6 && env.rain < 0.3) { pigT = rnd(8, 30); const spot = pick(PIG_SPOTS); pigeons.push({ x: spot[0] + rnd(-12, 12), y: spot[1], t: rnd(3000), dir: Math.random() < 0.5 ? 1 : -1, fly: 0, life: rnd(30, 90) }) }
+  for (let i = pigeons.length - 1; i >= 0; i--) { const p = pigeons[i]; p.t += dt * 1000; p.life -= dt
+    if (!p.fly && (p.life < 0 || env.rain > 0.3)) { p.fly = 1; p.vx = p.dir * rnd(25, 40); p.vy = -rnd(18, 28) }
+    if (p.fly) { p.x += p.vx * dt; p.y += p.vy * dt; if (p.y < -10 || p.x < -10 || p.x > W + 10) pigeons.splice(i, 1) } else if (Math.random() < dt * 0.2) { p.x += p.dir; if (Math.random() < 0.3) p.dir = -p.dir } }
+  // avions + étoiles filantes la nuit
+  planeT -= dt
+  if (planeT <= 0) { planeT = rnd(60, 150); if (env.dark > 0.6) planes.push({ x: -4, y: rnd(10, 60), v: rnd(6, 10), t: 0 }) }
+  for (let i = planes.length - 1; i >= 0; i--) { const p = planes[i]; p.x += p.v * dt; p.t += dt; if (p.x > W + 4) planes.splice(i, 1) }
+  if (env.dark > 0.85 && env.cloud < 0.6 && Math.random() < dt / 90) meteors.push({ x: X0 + rnd(Math.min(100, VW / 5), VW - Math.min(100, VW / 5)), y: rnd(5, 40), vx: rnd(-80, 80), vy: rnd(30, 50), age: 0 })
+  for (let i = meteors.length - 1; i >= 0; i--) { const m = meteors[i]; m.age += dt; m.x += m.vx * dt; m.y += m.vy * dt; if (m.age > 0.8) meteors.splice(i, 1) }
+  // pluie / neige
+  const nR = Math.round(env.rain * 420 + env.snow * 260)
+  while (drops.length < nR) drops.push({ x: rnd(W), y: rnd(-20, H), v: env.snow ? rnd(12, 26) : rnd(150, 230), z: rnd(0.5, 1), ph: rnd(6), snow: env.snow > 0 })
+  if (drops.length > nR) drops.length = nR
+  for (const d of drops) { d.y += d.v * dt; d.ph += dt; d.x += d.snow ? Math.sin(d.ph * 1.6) * 8 * dt + wind * 0.6 * dt : d.v * dt * 0.12; if (d.y > H) { d.y = rnd(-20, 0); d.x = rnd(-30, W) } }
+}
+const CAT_SIT = [96, 205], CAT_RIDGE = 159, PIG_SPOTS = [[170, 220], [420, 172], [600, 168], [880, 174]], LINGE = [520, 150]
+
+// --- dessin ------------------------------------------------------------------------------------------
+function drawSky() {
+  // soleil
+  const e = env.el
+  if (e > -2) {
+    const sx = X0 + VW / 2 + Math.sin(env.ha) * VW * 0.5, sy = 112 - e * 2.1, low = 1 - sstep(3, 18, e)
+    const col = mix([255, 246, 214], [255, 150, 80], low), vis = (1 - env.oc * 0.9)
+    for (let y = -26; y <= 26; y++) for (let x = -34; x <= 34; x++) {
+      const d = Math.hypot(x, y)
+      if (d <= 6.5) { if (vis > bay(x + 8, y + 8) * 1.2) setPx(sx + x, sy + y, lerp(G.zen[0], col[0], vis), lerp(G.zen[1], col[1], vis), lerp(G.zen[2], col[2], vis), true) }
+      else if (d < 30) { const g = Math.pow(1 - d / 30, 2) * (0.3 + 0.5 * low) * vis; if (g > bay(x + 40, y + 40) * 0.35) addPx(sx + x, sy + y, col[0] * 0.18, col[1] * 0.14, col[2] * 0.08, true) }
+    }
+  }
+  // lune (phase réelle)
+  const ph = env.moon, mAng = env.ha - ph * Math.PI * 2, mEl = Math.cos(mAng) * -60
+  if (mEl > -2 && env.dark > 0.2) {
+    const mx = X0 + VW / 2 + Math.sin(mAng + Math.PI) * VW * 0.46, my = 110 - mEl * 1.6, R = 6, lit = Math.cos(ph * Math.PI * 2), vis = (1 - env.oc * 0.85)
+    for (let y = -R; y <= R; y++) for (let x = -R; x <= R; x++) {
+      if (x * x + y * y > R * R + 1) continue
+      const xx = x / R, term = Math.sqrt(Math.max(0, 1 - (y / R) ** 2)) * lit
+      const on = ph < 0.5 ? xx > term : xx < -term
+      if (on) { const c = hash(x + 9, y + 9) < 0.2 ? [210, 208, 192] : [244, 240, 222]; setPx(mx + x, my + y, lerp(c[0], G.zen[0], 1 - vis), lerp(c[1], G.zen[1], 1 - vis), lerp(c[2], G.zen[2], 1 - vis), true) }
+    }
+    for (let y = -18; y <= 18; y++) for (let x = -18; x <= 18; x++) { const d = Math.hypot(x, y); if (d > R && d < 18) { const g = (1 - d / 18) ** 2 * 30 * vis * (1 - Math.abs(lit) * 0.6); if (g > bay(x + 20, y + 20) * 12) addPx(mx + x, my + y, g * 0.8, g * 0.85, g, true) } }
+  }
+  // étoiles
+  const sv = sstep(0.55, 0.95, env.dark) * (1 - env.cloud * 0.75) * (1 - env.rain)
+  if (sv > 0.03) for (const s of STARS) { const b = sv * (0.55 + 0.45 * Math.sin(G.t * s.sp + s.ph)); if (b < 0.1) continue; const i = s.i, v = OUT[i], c = 220 * b; OUT[i] = pack(lerp(v & 255, c, b), lerp((v >>> 8) & 255, c, b), lerp((v >>> 16) & 255, c * 1.05, b)) }
+  for (const m of meteors) for (let k = 0; k < 10; k++) addPx(m.x - m.vx * k * 0.006, m.y - m.vy * k * 0.006, 160 - k * 15, 160 - k * 15, 170 - k * 15, true)
+  for (const p of planes) { addPx(p.x, p.y, 90, 90, 90, true); if ((p.t % 1.3) < 0.15) { setPx(p.x - 1, p.y, 230, 50, 50, true); setPx(p.x + 2, p.y, 240, 240, 240, true) } }
+  for (const c of clouds) bl(c.n, 0, c.x, c.y, false, { sky: true })
+  const bc = env.dark > 0.3 ? [30, 30, 44] : [44, 44, 60]
+  for (const b of birds) { const up = Math.sin(b.ph) > 0; setPx(b.x, b.y, ...bc, true); setPx(b.x - 1, b.y - (up ? 1 : 0), ...bc, true); setPx(b.x + 1, b.y - (up ? 1 : 0), ...bc, true) }
+}
+function drawLife() {
+  if (env.rain < 0.1 && env.snow < 0.1 && env.h >= 8 && env.h < 20) bl('linge', simMs, LINGE[0], LINGE[1], false)
+  if (env.h >= 6 && env.h < 22.5 && env.rain < 0.3) bl('chat', simMs, CAT_SIT[0], CAT_SIT[1], false)
+  if (cats.walk) bl('chat_marche', cats.walk.t, cats.walk.x, cats.walk.y - 11, cats.walk.dir < 0)
+  for (const p of pigeons) p.fly ? bl('pigeon_vol', p.t, p.x, p.y - 6, p.vx < 0) : bl('pigeon', p.t, p.x, p.y - 6, p.dir < 0)
+  // fumées (bouffées qui grossissent et se dissipent en trame)
+  for (const p of smoke) {
+    const t = p.age / p.life, sz = p.near ? (t < 0.08 ? 1 : t < 0.35 ? 2 : 3) : (t < 0.3 ? 0 : t < 0.7 ? 1 : 2)
+    const s = SPR['fumee_' + sz]; blit(s, s.frames[0], p.x - (s.w >> 1), p.y - (s.h >> 1), false, { alpha: (1 - t * t) * (p.near ? 1 : 0.7) })
+  }
+}
+function drawWeather() {
+  for (const d of drops) {
+    if (d.snow) { setPx(d.x, d.y, 240 * Math.max(0.5, G.amb[0]), 242 * Math.max(0.5, G.amb[1]), 250 * Math.max(0.55, G.amb[2])); continue }
+    const c = [150 + G.hor[0] * 0.2, 160 + G.hor[1] * 0.2, 175 + G.hor[2] * 0.2]
+    for (let k = 0; k < 3 + d.z * 2; k++) { const x = (d.x - k * 0.12) | 0, y = (d.y - k) | 0; if (x < 0 || y < 0 || x >= W || y >= H) continue; const i = y * W + x, v = OUT[i], a = 0.22 * d.z; OUT[i] = pack(lerp(v & 255, c[0], a), lerp((v >>> 8) & 255, c[1], a), lerp((v >>> 16) & 255, c[2], a)) }
+  }
+}
+function draw() {
+  OUT.set(BASE)
+  drawSky()
+  drawLife()
+  drawWeather()
+  // guirlande : scintillement
+  if (BULBS.length && env.lamps > 0.3 && (env.h >= 17 || env.h < 1.5)) for (const i of BULBS) if (hash(i, Math.floor(G.t * 2)) < 0.08) { const v = OUT[i]; OUT[i] = pack(255, 250, 210) }
+  if (VW === W) IMG32.set(OUT); else for (let y = 0; y < H; y++) IMG32.set(OUT.subarray(y * W + X0, y * W + X0 + VW), y * VW)
+  ctx.putImageData(IMG, 0, 0)
+}
+
+// --- boucle (contrat JungleWall : __pause => 1 image/minute) -----------------------------------------
+const hud = document.getElementById('hud')
+let hudOn = Q.get('hud') === '1', baseKey = '', last = performance.now(), fpsA = 30
+const FPS = +(Q.get('fps') || 30)
+function tick(dt) {
+  G.t = simMs / 1000
+  updateEnv()
+  const key = [Math.round(env.el * 3), Math.round(env.rain * 10), Math.round(env.snow * 10), Math.round(env.cloud * 10), Math.floor(simMs / 90000)].join('|')
+  if (key !== baseKey) { baseKey = key; buildBase(); P32 = PAL.map(c => pack(c[0], c[1], c[2])) }
+  draw()
+}
+let _apG = 0, _apT = 0, _apOn = 0
+function _apS(ms) { const g = ++_apG; if (_apT) { clearTimeout(_apT); _apT = 0 } _apOn = 1; if (ms == null) requestAnimationFrame(n => { if (g === _apG) frame(n) }); else _apT = setTimeout(() => { _apT = 0; if (g === _apG) frame(performance.now()) }, ms) }
+(function () { let p = !!window.__pause; try { Object.defineProperty(window, '__pause', { configurable: true, enumerable: true, get() { return p }, set(v) { const w = p && !v; p = !!v; if (w && _apOn) _apS() } }) } catch (e) { } document.addEventListener('visibilitychange', () => { if (!document.hidden && _apOn) _apS() }) })()
+function frame(now) {
+  if (FREEZE) { tick(0); window.__ready = 1; window.__frozen = true; return }
+  if (window.__pause || document.hidden) {
+    const due = !window.__still || now - window.__still >= 60000
+    _apS(due ? 60000 : Math.max(500, 60000 - (now - window.__still)))
+    if (due) { window.__still = now; last = now; const before = simMs; syncClock(); const gap = Math.min(90, Math.max(0, (simMs - before) / 1000)); for (let i = 0; i < gap * 10; i++) simStep(0.1); tick(0) }
+    return
+  }
+  _apS(); window.__still = 0
+  const dt = (now - last) / 1000; if (dt < 1 / FPS - 0.004) return
+  last = now
+  const d = Math.min(dt, 0.1); fpsA = lerp(fpsA, 1 / Math.max(dt, 0.001), 0.05)
+  if (SPEED === 1) syncClock(); else simMs += d * 1000 * SPEED
+  simStep(d); tick(d)
+  if (hudOn) hud.textContent = `${String(env.h | 0).padStart(2, '0')}:${String(env.mi).padStart(2, '0')}${PARIS ? ' (Paris)' : ''}  soleil ${env.el.toFixed(1)}°  x${SPEED}  pluie ${(env.rain * 100) | 0}%  neige ${(env.snow * 100) | 0}%  ${fpsA | 0} fps\n[H] infos  [T] vitesse  [N/P] ±1h  [R] pluie`
+}
+addEventListener('keydown', (e) => {
+  const k = e.key.toLowerCase()
+  if (k === 'h') { hudOn = !hudOn; hud.style.display = hudOn ? 'block' : 'none' }
+  if (k === 't') { SPEED = SPEED === 1 ? 60 : SPEED === 60 ? 600 : 1; if (SPEED === 1) hourOffset = (simMs - Date.now()) / 3600e3 }
+  if (k === 'n' || k === 'p') { const d = k === 'n' ? 1 : -1; hourOffset += d; simMs += d * 3600e3 }
+  if (k === 'r') env.forceRain = env.forceRain === null ? 0.8 : env.forceRain > 0 ? 0 : null
+})
+// contrat des exports : on avance le monde image par image (dt en secondes)
+function updWorld(dt) { simMs += dt * 1000; simStep(dt) }
+function updEvents(dt) { }
+function render(dt) { tick(dt) }
+// état exposé pour l'adaptateur Wallpaper Engine (dist/we/_build/we_post.js)
+function realHour() { return clock(Date.now()).h }
+const S = {
+  get speed() { return SPEED }, set speed(v) { v = +v || 1; if (v === 1 && SPEED !== 1) hourOffset = (simMs - Date.now()) / 3600e3; SPEED = v },
+  get hour() { return env.h }, set hour(v) { const d = ((((+v - clock(simMs).h) % 24) + 36) % 24) - 12; if (Math.abs(d) > 1 / 60) { simMs += d * 3600e3; hourOffset += d } },
+  get rain() { return env.rain }, get snow() { return env.snow }, get t() { return simMs / 1000 },
+  raining: false, _rT: 0, get rainT() { return this._rT }, set rainT(v) { this._rT = +v; env.forceRain = this.raining ? +v : 0 },
+  get wTimer() { return 0 }, set wTimer(v) { if (v < 1e8) env.forceRain = null }
+}
+;(async function boot() {
+  buildIndex()
+  await decodeAll()
+  findWindows()
+  updateEnv()
+  setupLife()
+  for (let k = 0; k < 7; k++) spawnCloud(rnd(-40, W))
+  for (let k = 0; k < 400; k++) simStep(0.1)
+  layout()
+  if (hudOn) hud.style.display = 'block'
+  try { tick(0) } catch (e) { console.error(e) }
+  _apS()
+})()
+
+</script><script>/* Ambiant Pixel site bridge */addEventListener('message',function(e){if(e.origin!==location.origin&&location.protocol!=='file:')return;var d=e.data||{};if(d.ap==='pause')window.__pause=!!d.v;else if(d.ap==='fx'&&typeof spawn==='function'&&/^[a-z]+$/.test(d.v))spawn(d.v)});</script></body></html>
